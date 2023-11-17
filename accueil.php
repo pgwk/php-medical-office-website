@@ -68,12 +68,6 @@
                     <th>Médecin référent</th>
                     </tr>
         <?php
-            if (isset($_POST['supprimer'])){
-                $bdd = new PDO('mysql:host=localhost;dbname=r301;charset=utf8', 'root', '');
-                $sql = 'DELETE FROM contact
-                        WHERE idContact = \''.$_GET['idContact'].'\';';
-                $bdd->query($sql);
-            } 
             
             try {
                 $bdd = new PDO('mysql:host=localhost;dbname=cabinetmed;charset=utf8', 'root', '');
@@ -108,8 +102,8 @@
                         '<td>'.$data['dateNaissance'].'</td>'.
                         '<td>'.$data['lieuNaissance'].'</td>'.
                         '<td>'.$data['medecinReferent'].'</td>'.
-                        '<td>'.'<a href = \'modification.php?idContact='.$data[0].'\'> Modifier </a>'.'</td>'.
-                        '<td>'.'<a href = \'suppression.php?idContact='.$data[0].'\'> Supprimer </a>'.'</td>'.'</tr>';
+                        '<td>'.'<a href = \'modification.php?idUsager='.$data[0].'\'> Modifier </a>'.'</td>'.
+                        '<td>'.'<a href = \'suppression.php?id='.$data[0].'&type=usager\'> Supprimer </a>'.'</td>'.'</tr>';
             }
         ?>
         </table> 
