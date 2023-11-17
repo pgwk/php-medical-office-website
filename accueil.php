@@ -20,31 +20,13 @@
 
 <head>
     <meta charset="utf-8" />
+    <link rel="stylesheet" href="accueil.css">
     <title> Session </title>
 </head>
-<style>
-            input{
-                max-width: 100%;
-            }
-
-            th{
-                border-bottom: 1px solid grey;
-                text-align: left;
-                color: #1283ed;
-            }
-
-            td{
-                min-width: 100px;
-            }
-
-            tr:nth-child(even){
-                background-color: #f2efef;
-            }
-</style>
 <body>
     <h1> Parcourir </h1>
     <form method="post" action="accueil.php">
-            <table>
+            <table class="tableFiltres">
                 <tr>
                     <th>Nom</th>
                     <th>Prenom</th>
@@ -73,15 +55,7 @@
             <input type="submit" value="Rechercher" name="valider">
         </form>
         <br><br>
-        <?php
-            if (isset($_POST['supprimer'])){
-                $bdd = new PDO('mysql:host=localhost;dbname=r301;charset=utf8', 'root', '');
-                $sql = 'DELETE FROM contact
-                        WHERE idContact = \''.$_GET['idContact'].'\';';
-                $bdd->query($sql);
-            } 
-
-            echo "<table> <tr>
+        <table class="tableResultats"> <tr>
                     <th>Nom</th>
                     <th>Prenom</th>
                     <th>Civilite</th>
@@ -92,7 +66,14 @@
                     <th>Date de naissance</th>
                     <th>Lieu de naissance</th>
                     <th>Médecin référent</th>
-                    </tr>";
+                    </tr>
+        <?php
+            if (isset($_POST['supprimer'])){
+                $bdd = new PDO('mysql:host=localhost;dbname=r301;charset=utf8', 'root', '');
+                $sql = 'DELETE FROM contact
+                        WHERE idContact = \''.$_GET['idContact'].'\';';
+                $bdd->query($sql);
+            } 
             
             try {
                 $bdd = new PDO('mysql:host=localhost;dbname=cabinetmed;charset=utf8', 'root', '');
@@ -114,13 +95,13 @@
                     } 
                 }
             } 
-            
-            echo $sql;
+
             $res = $bdd->query($sql);
             while ($data = $res->fetch()){
                 echo '<tr><td>'.$data['nom'].'</td>'.
                         '<td>'.$data['prenom'].'</td>'.
-                        '<td>'.$data['civilite'].'</td>'.                            '<td>'.$data['adresse'].'</td>'.
+                        '<td>'.$data['civilite'].'</td>'.                            
+                        '<td>'.$data['adresse'].'</td>'.
                         '<td>'.$data['ville'].'</td>'.
                         '<td>'.$data['codePostal'].'</td>'.
                         '<td>'.$data['numeroSecuriteSociale'].'</td>'.
@@ -131,6 +112,20 @@
                         '<td>'.'<a href = \'suppression.php?idContact='.$data[0].'\'> Supprimer </a>'.'</td>'.'</tr>';
             }
         ?>
+        </table> 
+            <br><br><br><br>
+        <table class="tableFiltres">
+            <tr>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Civilite</th>
+            </tr>
+            <tr>
+                <td><input type="text" name="nomMedecin" value='<?php if (isset($_POST['nomMedecin'])) echo $_POST['nomMedecin'] ?>'></td>
+                <td><input type="text" name="prenomMedecin" value='<?php if (isset($_POST['prenomMedecin'])) echo $_POST['prenomMedecin'] ?>'></td>
+                <td><input type="text" name="civiliteMedecin" value='<?php if (isset($_POST['civiliteMedecin'])) echo $_POST['civiliteMedecin'] ?>'></td>
+            </tr>   
+        </table>
 </body>
 
 </html>
