@@ -9,7 +9,10 @@
             <h1> Création d'un usager </h1>
 
             <form action="ajoutusager.php" method="post">
-                Civilité : <input type="text" name="civ" value="" maxlength=4><br><br>
+                Civilité    <input type="radio" id="civM" name="civ" value="M" checked />
+                            <label for="civM">M</label>
+                            <input type="radio" id="civMme" name="civ" value="Mme" />
+                            <label for="civMme">Mme</label> <br> <br>
                 Nom : <input type="text" name="nom" value="" maxlength=50><br><br>
                 Prénom : <input type="text" name="prenom" value="" maxlength=50><br><br>
                 Adresse : <input type="text" name="adr" value="" maxlength=100><br><br>

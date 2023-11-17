@@ -35,6 +35,8 @@
                     if ($_REQUEST['type'] == 'usager') {
                         $stmt = $pdo->prepare("DELETE FROM usager WHERE idUsager=".$_REQUEST['id'].";");
                     } else {
+                        $stmt = $pdo->prepare("UPDATE usager SET medecinReferent = NULL WHERE medecinReferent=".$_REQUEST['id'].";");
+                        $stmt->execute();
                         $stmt = $pdo->prepare("DELETE FROM medecin WHERE idMedecin=".$_REQUEST['id'].";");
                     }
                     
