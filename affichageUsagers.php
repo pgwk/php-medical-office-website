@@ -108,9 +108,9 @@
                         '<td>'.$dataUsager['codePostal'].'</td>'.
                         '<td>'.$dataUsager['numeroSecuriteSociale'].'</td>'.
                         '<td>'.$dataUsager['dateNaissance'].'</td>'.
-                        '<td>'.$dataUsager['lieuNaissance'].'</td>'.
-                        '<td>'.$dataMedecin['nom'].' '.$dataMedecin['prenom'].'</td>'.
-                        '<td>'.'<a href = \'modification.php?idUsager='.$dataUsager[0].'\'> Modifier </a>'.'</td>'.
+                        '<td>'.$dataUsager['lieuNaissance'].'</td>';
+                echo !$dataMedecin ? '<td> - </td>' : '<td>'.$dataMedecin['nom'].' '.$dataMedecin['prenom'].'</td>';
+                echo    '<td>'.'<a href = \'modification.php?idUsager='.$dataUsager[0].'\'> Modifier </a>'.'</td>'.
                         '<td>'.'<a href = \'suppression.php?id='.$dataUsager[0].'&type=usager\'> Supprimer </a>'.'</td>'.'</tr>';
             }
         ?>
