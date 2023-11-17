@@ -75,51 +75,46 @@
                 echo ("Erreur ".$e);
             }
 
-            $sql = 'SELECT * FROM usager';
+            $reqUsagers = 'SELECT * FROM usager u';
+            $reqMedecinsReferent = 'SELECT m.nom, m.prenom FROM medecin m, usager u';
 
-            if (isset($_POST["valider"])){
-                $listeCriteres = array('nom', 'prenom', 'civilite', 'adresse', 'ville', 'codePostal', 'numeroSecuriteSociale', 'dateNaissance', 'lieuNaissance');
-                
-                $firstCriteria = true;
-                for ($i = 0; $i <= 8; $i++){
-                    if (!empty($_POST[$listeCriteres[$i]])){
-                        $sql = $firstCriteria ? $sql.' WHERE ' : $sql.' AND ';
-                        $sql = $sql.$listeCriteres[$i].' = \''.$_POST[$listeCriteres[$i]].'\'';
-                        $firstCriteria = false;
-                    } 
-                }
-            } 
+            $listeCriteres = array('nom', 'prenom', 'civilite', 'adresse', 'ville', 'codePostal', 'numeroSecuriteSociale', 'dateNaissance', 'lieuNaissance');
+            $firstCriteria = true;
+            for ($i = 0; $i <= 8; $i++){
+                if (!empty($_POST[$listeCriteres[$i]])){
+                    $reqUsagers = $firstCriteria ? $reqUsagers.' WHERE u.' : $reqUsagers.' AND ';
+                    $reqUsagers = $reqUsagers.$listeCriteres[$i].' = \''.$_POST[$listeCriteres[$i]].'\'';
+                    $reqMedecinsReferent = $firstCriteria ? $reqMedecinsReferent.' WHERE u.' : $reqMedecinsReferent.' AND ';
+                    $reqMedecinsReferent = $reqMedecinsReferent.$listeCriteres[$i].' = \''.$_POST[$listeCriteres[$i]].'\'';
+                    $firstCriteria = false;
+                } 
+            }
 
-            $res = $bdd->query($sql);
-            while ($data = $res->fetch()){
-                echo '<tr><td>'.$data['nom'].'</td>'.
-                        '<td>'.$data['prenom'].'</td>'.
-                        '<td>'.$data['civilite'].'</td>'.                            
-                        '<td>'.$data['adresse'].'</td>'.
-                        '<td>'.$data['ville'].'</td>'.
-                        '<td>'.$data['codePostal'].'</td>'.
-                        '<td>'.$data['numeroSecuriteSociale'].'</td>'.
-                        '<td>'.$data['dateNaissance'].'</td>'.
-                        '<td>'.$data['lieuNaissance'].'</td>'.
-                        '<td>'.$data['medecinReferent'].'</td>'.
-                        '<td>'.'<a href = \'modification.php?idUsager='.$data[0].'\'> Modifier </a>'.'</td>'.
-                        '<td>'.'<a href = \'suppression.php?id='.$data[0].'&type=usager\'> Supprimer </a>'.'</td>'.'</tr>';
+            if ($firstCriteria){
+                $reqMedecinsReferent = $reqMedecinsReferent.' WHERE m.idMedecin = u.medecinReferent';
+            } else {
+                $reqMedecinsReferent = $reqMedecinsReferent.' AND m.idMedecin = u.medecinReferent';
+            }
+
+            $resUsagers = $bdd->query($reqUsagers);
+            $resMedecins = $bdd->query($reqMedecinsReferent);
+            while ($dataUsager = $resUsagers->fetch()){
+                $dataMedecin = $resMedecins->fetch();
+                echo '<tr><td>'.$dataUsager['nom'].'</td>'.
+                        '<td>'.$dataUsager['prenom'].'</td>'.
+                        '<td>'.$dataUsager['civilite'].'</td>'.                            
+                        '<td>'.$dataUsager['adresse'].'</td>'.
+                        '<td>'.$dataUsager['ville'].'</td>'.
+                        '<td>'.$dataUsager['codePostal'].'</td>'.
+                        '<td>'.$dataUsager['numeroSecuriteSociale'].'</td>'.
+                        '<td>'.$dataUsager['dateNaissance'].'</td>'.
+                        '<td>'.$dataUsager['lieuNaissance'].'</td>'.
+                        '<td>'.$dataMedecin['nom'].' '.$dataMedecin['prenom'].'</td>'.
+                        '<td>'.'<a href = \'modification.php?idUsager='.$dataUsager[0].'\'> Modifier </a>'.'</td>'.
+                        '<td>'.'<a href = \'suppression.php?id='.$dataUsager[0].'&type=usager\'> Supprimer </a>'.'</td>'.'</tr>';
             }
         ?>
         </table> 
-            <br><br><br><br>
-        <table class="tableFiltres">
-            <tr>
-                <th>Nom</th>
-                <th>Prenom</th>
-                <th>Civilite</th>
-            </tr>
-            <tr>
-                <td><input type="text" name="nomMedecin" value='<?php if (isset($_POST['nomMedecin'])) echo $_POST['nomMedecin'] ?>'></td>
-                <td><input type="text" name="prenomMedecin" value='<?php if (isset($_POST['prenomMedecin'])) echo $_POST['prenomMedecin'] ?>'></td>
-                <td><input type="text" name="civiliteMedecin" value='<?php if (isset($_POST['civiliteMedecin'])) echo $_POST['civiliteMedecin'] ?>'></td>
-            </tr>   
-        </table>
 </body>
 
 </html>
