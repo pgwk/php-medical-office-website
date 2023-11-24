@@ -26,7 +26,7 @@
             }
 
             if (isset($_POST['valider'])){
-                $sql = 'UPDATE contact  SET nom = \''.$_POST['nom'].'\',
+                $sql = 'UPDATE medecin  SET nom = \''.$_POST['nom'].'\',
                                             prenom = \''.$_POST['prenom'].'\',
                                             civilite = \''.$_POST['civilite'].'\'
                                         WHERE id = \''.$_GET['idMedecin'].'\';';
@@ -37,7 +37,7 @@
 
             <h1> Modification d'un usager </h1>
 
-            <form action="ajoutusager.php" method="post">
+            <form action="modificationmedecin.php" method="post">
                 Civilité    <input type="radio" id="civM" name="civ" value="M" <?php if ($civilite == 'M'){ echo 'checked';} ?> />
                             <label for="civM">M</label>
                             <input type="radio" id="civMme" name="civ" value="Mme" <?php if ($civilite == 'Mme'){ echo 'checked';} ?> />

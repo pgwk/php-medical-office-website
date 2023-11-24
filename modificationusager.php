@@ -32,15 +32,15 @@
             }
 
             if (isset($_POST['valider'])){
-                $sql = 'UPDATE contact  SET nom = \''.$_POST['nom'].'\',
+                $sql = 'UPDATE usager  SET nom = \''.$_POST['nom'].'\',
                                             prenom = \''.$_POST['prenom'].'\',
-                                            civilite = \''.$_POST['civ'].'\',
-                                            adresse = \''.$_POST['adr'].'\',
-                                            codePostal = \''.$_POST['cp'].'\',
+                                            civilite = \''.$_POST['civilte'].'\',
+                                            adresse = \''.$_POST['adresse'].'\',
+                                            codePostal = \''.$_POST['codePostal'].'\',
                                             ville = \''.$_POST['ville'].'\',
-                                            numeroSecuriteSociale = \''.$_POST['nss'].'\',
-                                            dateNaissance = \''.$_POST['date'].'\',
-                                            lieuNaissance = \''.$_POST['lieu'].'\'
+                                            numeroSecuriteSociale = \''.$_POST['numeroSecuriteSociale'].'\',
+                                            dateNaissance = \''.$_POST['dateNaissance'].'\',
+                                            lieuNaissance = \''.$_POST['lieuNaissance'].'\'
                                         WHERE id = \''.$_GET['idContact'].'\';';
                 $bdd->query($sql);
             }
@@ -49,7 +49,7 @@
 
             <h1> Modification d'un usager </h1>
 
-            <form action="ajoutusager.php" method="post">
+            <form action=<?php echo 'modificationusager.php?idUsager='.$_GET['idUsager'].'\''; ?> method="post">
                 Civilité    <input type="radio" id="civM" name="civ" value="M" <?php if ($civilite == 'M'){ echo 'checked';} ?> />
                             <label for="civM">M</label>
                             <input type="radio" id="civMme" name="civ" value="Mme" <?php if ($civilite == 'Mme'){ echo 'checked';} ?> />
@@ -84,7 +84,7 @@
                     ?>
                 </select> 
                 <input type="submit" name="Valider" value="Confirmer">
-                <input type="reset" name="Vider" value ="Vider">
+                <input type="reset" name="Reinitialiser" value ="Réinitialiser">
             </form>
 
     </body>
