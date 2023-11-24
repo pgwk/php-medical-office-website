@@ -95,7 +95,6 @@
             } else {
                 $reqMedecinsReferent = $reqMedecinsReferent.' AND m.idMedecin = u.medecinReferent';
             }
-
             $resUsagers = $bdd->query($reqUsagers);
             $resMedecins = $bdd->query($reqMedecinsReferent);
             while ($dataUsager = $resUsagers->fetch()){
@@ -110,7 +109,7 @@
                         '<td>'.$dataUsager['dateNaissance'].'</td>'.
                         '<td>'.$dataUsager['lieuNaissance'].'</td>';
                 echo !$dataMedecin ? '<td> - </td>' : '<td>'.$dataMedecin['nom'].' '.$dataMedecin['prenom'].'</td>';
-                echo    '<td>'.'<a href = \'modification.php?idUsager='.$dataUsager[0].'\'> Modifier </a>'.'</td>'.
+                echo    '<td>'.'<a href = \'modificationusager.php?idUsager='.$dataUsager[0].'\'> Modifier </a>'.'</td>'.
                         '<td>'.'<a href = \'suppression.php?id='.$dataUsager[0].'&type=usager\'> Supprimer </a>'.'</td>'.'</tr>';
             }
         ?>

@@ -7,7 +7,7 @@
     <?php
             if (isset($_GET['idUsager'])){
 
-                $bdd = new PDO("mysql:host=localhost;dbname=cabinetMed", 'root', '');
+                $bdd = new PDO("mysql:host=localhost;dbname=cabinetmed", 'root', '');
                 $sql = 'SELECT * FROM usager WHERE idUsager = '.$_GET['idUsager'];
                 $stmt = $bdd->prepare($sql);
                 if ($stmt == false){
@@ -46,29 +46,59 @@
 
             <h1> Modification d'un usager </h1>
 
-            <form action="ajoutusager.php" method="post">
-                Civilité : <input type="text" name="civilite" maxlength=4 value='<?php echo $civilite ?>'><br><br>
-                Nom : <input type="text" name="nom" maxlength=50 value='<?php echo $nom ?>'><br><br>
-                Prénom : <input type="text" name="prenom" maxlength=50 value='<?php echo $prenom ?>'><br><br>
-                Adresse : <input type="text" name="adresse" maxlength=100 value='<?php echo $adresse ?>'><br><br>
-                Ville : <input type="text" name="ville" maxlength=50 value='<?php echo $ville ?>'><br><br>
-                Code postal : <input type="text" name="codePostal" maxlength=5 value='<?php echo $codePostal ?>'><br><br>
-                N° Sécurité sociale : <input type="text" name="numeroSecuriteSociale" maxlength=15 value='<?php echo $numeroSecuriteSociale ?>'><br><br>
-                Date de naissance : <input type="date" name="dateNaissance" value='<?php echo $dateNaissance ?>'><br><br>
-                Lieu de naissance : <input type="text" name="lieuNaissance" value='<?php echo $lieuNaissance ?>'><br><br>
-                Médecin reférent <select name="medecinReferent" id="medRef">
-                    <option value="">--Veuillez choisir un médecin reférent</option>
+            <form action="modificationusager.php" method="post">
+                <?php
+
+                    if ($civilite == 'M') {
+                        echo 'Civilité    <input type="radio" id="civM" name="civ" value="M" checked />';
+                        echo '<label for="civM">M</label>';
+                        echo '<input type="radio" id="civMme" name="civ" value="Mme" />';
+                        echo '<label for="civMme">Mme</label> <br> <br>';
+                    } else {
+                        echo 'Civilité    <input type="radio" id="civM" name="civ" value="M" />';
+                        echo '<label for="civM">M</label>';
+                        echo '<input type="radio" id="civMme" name="civ" value="Mme" checked />';
+                        echo '<label for="civMme">Mme</label> <br> <br>';
+                    }
+                ?>
+                
+                Nom : <input type="text" name="nom" value="<?php echo $nom ?>" maxlength=50><br><br>
+                Prénom : <input type="text" name="prenom" value="<?php echo $prenom ?>" maxlength=50><br><br>
+                Adresse : <input type="text" name="adr" value="<?php echo $adresse ?>" maxlength=100><br><br>
+                Ville : <input type="text" name="ville" value="<?php echo $ville ?>" maxlength=50><br><br>
+                Code postal : <input type="text" name="cp" value="<?php echo $codePostal ?>" maxlength=5><br><br>
+                N° Sécurité sociale : <input type="text" name="nss" value="<?php echo $numeroSecuriteSociale ?>" maxlength=15><br><br>
+                Date de naissance : <input type="date" name="date" value="<?php echo $dateNaissance ?>"><br><br>
+                Lieu de naissance : <input type="text" name="lieu" value="<?php echo $lieuNaissance ?>" maxlength=50><br><br>
+                Médecin reférent <select name="idMed" id="medRef">
                     <?php
+                    
                         try {
                             $pdo = new PDO("mysql:host=localhost;dbname=cabinetmed", 'root', '');
                         } catch (Exception $e) {
                             echo ("Erreur : ".$e);
                         }
-                        $stmt = $pdo->prepare("SELECT idMedecin, civilite, nom, prenom FROM medecin");
+
+                        $stmt = $pdo->prepare("SELECT idMedecin, medecin.civilite, medecin.nom, medecin.prenom FROM medecin, usager WHERE idMedecin=medecinReferent AND idUsager=".$_GET['idUsager']);
                         if ($stmt == false) {
                             echo "PREPARE ERROR"; 
                         } else {
                             $stmt->execute();
+                            if ($row = $stmt->fetch()) {
+                                $id = $row["idMedecin"];
+                                $titre = $row["civilite"].'. '.$row["nom"].' '.$row["prenom"];
+                                echo '<option value='.$id.'> '.$titre.'</option>';
+                            } else {
+                                echo '<option value="">--Veuillez choisir un médecin reférent</option>';
+                            }
+                        }
+
+                        $stmt = $pdo->prepare("SELECT idMedecin, civilite, nom, prenom FROM medecin WHERE idMedecin NOT IN SELECT idMedecin FROM medecin, usager WHERE idMedecin=medecinReferent AND idUsager=".$_GET['idUsager']);
+                        if ($stmt == false) {
+                            echo "PREPARE ERROR";
+                        } else {
+                            $stmt -> execute();
+                            echo 'in';
                             while ($row = $stmt->fetch()) {
                                 $id = $row["idMedecin"];
                                 $titre = $row["civilite"].'. '.$row["nom"].' '.$row["prenom"];
