@@ -77,7 +77,7 @@
                 echo '<tr><td>'.$data['civilite'].'</td>'.
                         '<td>'.$data['nom'].'</td>'.
                         '<td>'.$data['prenom'].'</td>'.                            
-                        '<td>'.'<a href = \'modification.php?idUsager='.$data[0].'\'> Modifier </a>'.'</td>'.
+                        '<td>'.'<a href = \'modificationmedecin.php?idMedecin='.$data[0].'\'> Modifier </a>'.'</td>'.
                         '<td>'.'<a href = \'suppression.php?id='.$data[0].'&type=medecin\'> Supprimer </a>'.'</td>'.'</tr>';
             }
         ?>

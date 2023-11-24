@@ -55,7 +55,8 @@
             <input type="submit" value="Rechercher" name="valider">
         </form>
         <br><br>
-        <table class="tableResultats"> <tr>
+        <table class="tableResultats"> 
+                    <tr>
                     <th>Nom</th>
                     <th>Prenom</th>
                     <th>Civilite</th>
