@@ -65,16 +65,33 @@
                 Médecin reférent <select name="medecinReferent" id="medRef">
                     <option value="">--Veuillez choisir un médecin reférent</option>
                     <?php
+                    
                         try {
                             $pdo = new PDO("mysql:host=localhost;dbname=cabinetmed", 'root', '');
                         } catch (Exception $e) {
                             echo ("Erreur : ".$e);
                         }
-                        $stmt = $pdo->prepare("SELECT idMedecin, civilite, nom, prenom FROM medecin");
+
+                        $stmt = $pdo->prepare("SELECT idMedecin, medecin.civilite, medecin.nom, medecin.prenom FROM medecin, usager WHERE idMedecin=medecinReferent AND idUsager=".$_GET['idUsager']);
                         if ($stmt == false) {
                             echo "PREPARE ERROR"; 
                         } else {
                             $stmt->execute();
+                            if ($row = $stmt->fetch()) {
+                                $id = $row["idMedecin"];
+                                $titre = $row["civilite"].'. '.$row["nom"].' '.$row["prenom"];
+                                echo '<option value='.$id.'> '.$titre.'</option>';
+                            } else {
+                                echo '<option value="">--Veuillez choisir un médecin reférent</option>';
+                            }
+                        }
+
+                        $stmt = $pdo->prepare("SELECT idMedecin, civilite, nom, prenom FROM medecin WHERE idMedecin NOT IN SELECT idMedecin FROM medecin, usager WHERE idMedecin=medecinReferent AND idUsager=".$_GET['idUsager']);
+                        if ($stmt == false) {
+                            echo "PREPARE ERROR";
+                        } else {
+                            $stmt -> execute();
+                            echo 'in';
                             while ($row = $stmt->fetch()) {
                                 $id = $row["idMedecin"];
                                 $titre = $row["civilite"].'. '.$row["nom"].' '.$row["prenom"];

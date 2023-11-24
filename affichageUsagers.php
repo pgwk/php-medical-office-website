@@ -96,7 +96,6 @@
             } else {
                 $reqMedecinsReferent = $reqMedecinsReferent.' AND m.idMedecin = u.medecinReferent';
             }
-
             $resUsagers = $bdd->query($reqUsagers);
             $resMedecins = $bdd->query($reqMedecinsReferent);
             while ($dataUsager = $resUsagers->fetch()){
