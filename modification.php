@@ -31,14 +31,14 @@
                 $bdd = new PDO("mysql:host=localhost;dbname=cabinetMed", 'root', '');
                 $sql = 'UPDATE contact  SET nom = \''.$_POST['nom'].'\',
                                             prenom = \''.$_POST['prenom'].'\',
-                                            civilite = \''.$_POST['civilite'].'\',
-                                            adresse = \''.$_POST['adresse'].'\',
-                                            codePostal = \''.$_POST['codePostal'].'\',
+                                            civilite = \''.$_POST['civ'].'\',
+                                            adresse = \''.$_POST['adr'].'\',
+                                            codePostal = \''.$_POST['cp'].'\',
                                             ville = \''.$_POST['ville'].'\',
-                                            numeroSecuriteSociale = \''.$_POST['numeroSecuriteSociale'].'\',
-                                            dateNaissance = \''.$_POST['dateNaissance'].'\',
-                                            lieuNaissance = \''.$_POST['lieuNaissance'].'\'
-                                        WHERE idContact = \''.$_GET['idContact'].'\';';
+                                            numeroSecuriteSociale = \''.$_POST['nss'].'\',
+                                            dateNaissance = \''.$_POST['date'].'\',
+                                            lieuNaissance = \''.$_POST['lieu'].'\'
+                                        WHERE id = \''.$_GET['idContact'].'\';';
                 $bdd->query($sql);
             }
     ?>
