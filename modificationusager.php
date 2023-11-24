@@ -5,11 +5,15 @@
         <title> Modification d'usager </title>
     </head>
     <?php
+        try {
+            $pdo = new PDO("mysql:host=localhost;dbname=cabinetmed", 'root', '');
+        } catch (Exception $e) {
+            echo ("Erreur : ".$e);
+        }
             if (isset($_GET['idUsager'])){
 
-                $bdd = new PDO("mysql:host=localhost;dbname=cabinetMed", 'root', '');
                 $sql = 'SELECT * FROM usager WHERE idUsager = '.$_GET['idUsager'];
-                $stmt = $bdd->prepare($sql);
+                $stmt = $pdo->prepare($sql);
                 if ($stmt == false){
                     echo 'ERREUR';
                 }
@@ -28,7 +32,6 @@
             }
 
             if (isset($_POST['valider'])){
-                $bdd = new PDO("mysql:host=localhost;dbname=cabinetMed", 'root', '');
                 $sql = 'UPDATE contact  SET nom = \''.$_POST['nom'].'\',
                                             prenom = \''.$_POST['prenom'].'\',
                                             civilite = \''.$_POST['civ'].'\',
@@ -47,15 +50,18 @@
             <h1> Modification d'un usager </h1>
 
             <form action="ajoutusager.php" method="post">
-                Civilité : <input type="text" name="civilite" maxlength=4 value='<?php echo $civilite ?>'><br><br>
-                Nom : <input type="text" name="nom" maxlength=50 value='<?php echo $nom ?>'><br><br>
-                Prénom : <input type="text" name="prenom" maxlength=50 value='<?php echo $prenom ?>'><br><br>
-                Adresse : <input type="text" name="adresse" maxlength=100 value='<?php echo $adresse ?>'><br><br>
-                Ville : <input type="text" name="ville" maxlength=50 value='<?php echo $ville ?>'><br><br>
-                Code postal : <input type="text" name="codePostal" maxlength=5 value='<?php echo $codePostal ?>'><br><br>
-                N° Sécurité sociale : <input type="text" name="numeroSecuriteSociale" maxlength=15 value='<?php echo $numeroSecuriteSociale ?>'><br><br>
-                Date de naissance : <input type="date" name="dateNaissance" value='<?php echo $dateNaissance ?>'><br><br>
-                Lieu de naissance : <input type="text" name="lieuNaissance" value='<?php echo $lieuNaissance ?>'><br><br>
+                Civilité    <input type="radio" id="civM" name="civ" value="M" <?php if ($civilite == 'M'){ echo 'checked';} ?> />
+                            <label for="civM">M</label>
+                            <input type="radio" id="civMme" name="civ" value="Mme" <?php if ($civilite == 'Mme'){ echo 'checked';} ?> />
+                            <label for="civMme">Mme</label><br><br>
+                Nom <input type="text" name="nom" maxlength=50 value='<?php echo $nom ?>'><br><br>
+                Prénom <input type="text" name="prenom" maxlength=50 value='<?php echo $prenom ?>'><br><br>
+                Adresse <input type="text" name="adresse" maxlength=100 value='<?php echo $adresse ?>'><br><br>
+                Ville <input type="text" name="ville" maxlength=50 value='<?php echo $ville ?>'><br><br>
+                Code postal <input type="text" name="codePostal" maxlength=5 value='<?php echo $codePostal ?>'><br><br>
+                N° Sécurité sociale <input type="text" name="numeroSecuriteSociale" maxlength=15 value='<?php echo $numeroSecuriteSociale ?>'><br><br>
+                Date de naissance <input type="date" name="dateNaissance" value='<?php echo $dateNaissance ?>'><br><br>
+                Lieu de naissance <input type="text" name="lieuNaissance" value='<?php echo $lieuNaissance ?>'><br><br>
                 Médecin reférent <select name="medecinReferent" id="medRef">
                     <option value="">--Veuillez choisir un médecin reférent</option>
                     <?php

@@ -55,7 +55,8 @@
             <input type="submit" value="Rechercher" name="valider">
         </form>
         <br><br>
-        <table class="tableResultats"> <tr>
+        <table class="tableResultats"> 
+                    <tr>
                     <th>Nom</th>
                     <th>Prenom</th>
                     <th>Civilite</th>
@@ -110,7 +111,7 @@
                         '<td>'.$dataUsager['dateNaissance'].'</td>'.
                         '<td>'.$dataUsager['lieuNaissance'].'</td>';
                 echo !$dataMedecin ? '<td> - </td>' : '<td>'.$dataMedecin['nom'].' '.$dataMedecin['prenom'].'</td>';
-                echo    '<td>'.'<a href = \'modification.php?idUsager='.$dataUsager[0].'\'> Modifier </a>'.'</td>'.
+                echo    '<td>'.'<a href = \'modificationusager.php?idUsager='.$dataUsager[0].'\'> Modifier </a>'.'</td>'.
                         '<td>'.'<a href = \'suppression.php?id='.$dataUsager[0].'&type=usager\'> Supprimer </a>'.'</td>'.'</tr>';
             }
         ?>
