@@ -11,7 +11,6 @@
             echo ("Erreur : ".$e);
         }
             if (isset($_GET['idUsager'])){
-
                 $sql = 'SELECT * FROM usager WHERE idUsager = '.$_GET['idUsager'];
                 $stmt = $pdo->prepare($sql);
                 if ($stmt == false){
@@ -63,7 +62,6 @@
                 Date de naissance <input type="date" name="dateNaissance" value='<?php echo $dateNaissance ?>'><br><br>
                 Lieu de naissance <input type="text" name="lieuNaissance" value='<?php echo $lieuNaissance ?>'><br><br>
                 Médecin reférent <select name="medecinReferent" id="medRef">
-                    <option value="">--Veuillez choisir un médecin reférent</option>
                     <?php
                     
                         try {
@@ -72,7 +70,7 @@
                             echo ("Erreur : ".$e);
                         }
 
-                        $stmt = $pdo->prepare("SELECT idMedecin, medecin.civilite, medecin.nom, medecin.prenom FROM medecin, usager WHERE idMedecin=medecinReferent AND idUsager=".$_GET['idUsager']);
+                        $stmt = $pdo->prepare("SELECT idMedecin, medecin.civilite, medecin.nom, medecin.prenom FROM medecin, usager WHERE idMedecin = medecinReferent AND idUsager=".$_GET['idUsager']);
                         if ($stmt == false) {
                             echo "PREPARE ERROR"; 
                         } else {
@@ -85,19 +83,28 @@
                                 echo '<option value="">--Veuillez choisir un médecin reférent</option>';
                             }
                         }
+                       
 
-                        $stmt = $pdo->prepare("SELECT idMedecin, civilite, nom, prenom FROM medecin WHERE idMedecin NOT IN SELECT idMedecin FROM medecin, usager WHERE idMedecin=medecinReferent AND idUsager=".$_GET['idUsager']);
+                        $stmt = $pdo->prepare(" SELECT idMedecin, civilite, nom, prenom 
+                                                FROM medecin 
+                                                WHERE idMedecin NOT IN (SELECT medecinReferent
+                                                                        FROM usager
+                                                                        WHERE idUsager = ".$_GET['idUsager']);
+                        echo '<option value="30">médecin reférent</option>';
                         if ($stmt == false) {
                             echo "PREPARE ERROR";
+                            echo '<option value="31">médecin reférent 2</option>';
                         } else {
                             $stmt -> execute();
-                            echo 'in';
+                            echo '<option value="32">médecin reférent 3</option>';
                             while ($row = $stmt->fetch()) {
                                 $id = $row["idMedecin"];
                                 $titre = $row["civilite"].'. '.$row["nom"].' '.$row["prenom"];
                                 echo '<option value='.$id.'> '.$titre.'</option>';
+                                echo '<option value="30">médecin reférent</option>';
                             }
                         }
+                        echo '<option value="34">médecin reférent 4</option>';
                     ?>
                 </select> 
                 <input type="submit" name="Valider" value="Confirmer">

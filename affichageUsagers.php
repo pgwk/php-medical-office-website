@@ -1,18 +1,5 @@
 <?php session_start();
-    if (isset($_POST['envoyer']) && !empty($_POST['pseudonyme']) && !empty($_POST['mdp'])){
-        $pseudonyme = $_POST['pseudonyme'];
-
-        if (!isset($_SESSION['pseudo'])){
-            $_SESSION['pseudo'] = $pseudonyme;
-        }
-        if (!isset($_SESSION['nbVisitesUne']) && !isset($_SESSION['nbVisitesDeux'])){
-            $nbVisitesUne = 0;
-            $nbVisitesDeux = 0;
-            
-            $_SESSION['nbVisitesUne'] = $nbVisitesUne;
-            $_SESSION['nbVisitesDeux'] = $nbVisitesDeux;
-        }
-    }
+    
 
 ?>
 <!DOCTYPE HTML>
@@ -21,11 +8,11 @@
 <head>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="accueil.css">
-    <title> Session </title>
+    <title> Liste des usagers </title>
 </head>
 <body>
     <h1> Parcourir </h1>
-    <form method="post" action="accueil.php">
+    <form method="post" action="affichageUsagers.php">
             <table class="tableFiltres">
                 <tr>
                     <th>Nom</th>
@@ -71,35 +58,27 @@
         <?php
             
             try {
-                $bdd = new PDO('mysql:host=localhost;dbname=cabinetmed;charset=utf8', 'root', '');
+                $pdo = new PDO('mysql:host=localhost;dbname=cabinetmed;charset=utf8', 'root', '');
             } catch (Exception $e) {
                 echo ("Erreur ".$e);
             }
 
-            $reqUsagers = 'SELECT * FROM usager u';
-            $reqMedecinsReferent = 'SELECT m.nom, m.prenom FROM medecin m, usager u';
+            $reqUsagers = ' SELECT u.*, m.nom as nomMedecin, m.prenom as prenomMedecin
+                            FROM usager u
+                            LEFT JOIN medecin M ON u.medecinReferent = m.idMedecin';
 
             $listeCriteres = array('nom', 'prenom', 'civilite', 'adresse', 'ville', 'codePostal', 'numeroSecuriteSociale', 'dateNaissance', 'lieuNaissance');
             $firstCriteria = true;
             for ($i = 0; $i <= 8; $i++){
                 if (!empty($_POST[$listeCriteres[$i]])){
-                    $reqUsagers = $firstCriteria ? $reqUsagers.' WHERE u.' : $reqUsagers.' AND ';
+                    $reqUsagers = $firstCriteria ? $reqUsagers.' WHERE u.' : $reqUsagers.' AND u.';
                     $reqUsagers = $reqUsagers.$listeCriteres[$i].' = \''.$_POST[$listeCriteres[$i]].'\'';
-                    $reqMedecinsReferent = $firstCriteria ? $reqMedecinsReferent.' WHERE u.' : $reqMedecinsReferent.' AND ';
-                    $reqMedecinsReferent = $reqMedecinsReferent.$listeCriteres[$i].' = \''.$_POST[$listeCriteres[$i]].'\'';
                     $firstCriteria = false;
                 } 
             }
 
-            if ($firstCriteria){
-                $reqMedecinsReferent = $reqMedecinsReferent.' WHERE m.idMedecin = u.medecinReferent';
-            } else {
-                $reqMedecinsReferent = $reqMedecinsReferent.' AND m.idMedecin = u.medecinReferent';
-            }
-            $resUsagers = $bdd->query($reqUsagers);
-            $resMedecins = $bdd->query($reqMedecinsReferent);
+            $resUsagers = $pdo->query($reqUsagers);
             while ($dataUsager = $resUsagers->fetch()){
-                $dataMedecin = $resMedecins->fetch();
                 echo '<tr><td>'.$dataUsager['nom'].'</td>'.
                         '<td>'.$dataUsager['prenom'].'</td>'.
                         '<td>'.$dataUsager['civilite'].'</td>'.                            
@@ -108,9 +87,9 @@
                         '<td>'.$dataUsager['codePostal'].'</td>'.
                         '<td>'.$dataUsager['numeroSecuriteSociale'].'</td>'.
                         '<td>'.$dataUsager['dateNaissance'].'</td>'.
-                        '<td>'.$dataUsager['lieuNaissance'].'</td>';
-                echo !$dataMedecin ? '<td> - </td>' : '<td>'.$dataMedecin['nom'].' '.$dataMedecin['prenom'].'</td>';
-                echo    '<td>'.'<a href = \'modificationusager.php?idUsager='.$dataUsager[0].'\'> Modifier </a>'.'</td>'.
+                        '<td>'.$dataUsager['lieuNaissance'].'</td>'.
+                        '<td>'.$dataUsager['nomMedecin'].' '.$dataUsager['prenomMedecin'].'</td>'.
+                        '<td>'.'<a href = \'modificationusager.php?idUsager='.$dataUsager[0].'\'> Modifier </a>'.'</td>'.
                         '<td>'.'<a href = \'suppression.php?id='.$dataUsager[0].'&type=usager\'> Supprimer </a>'.'</td>'.'</tr>';
             }
         ?>
