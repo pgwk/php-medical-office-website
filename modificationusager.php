@@ -96,7 +96,10 @@
                             echo '<option value="31">médecin reférent 2</option>';
                         } else {
                             $stmt -> execute();
+<<<<<<< Updated upstream
                             echo '<option value="32">médecin reférent 3</option>';
+=======
+>>>>>>> Stashed changes
                             while ($row = $stmt->fetch()) {
                                 $id = $row["idMedecin"];
                                 $titre = $row["civilite"].'. '.$row["nom"].' '.$row["prenom"];
@@ -104,7 +107,11 @@
                                 echo '<option value="30">médecin reférent</option>';
                             }
                         }
+<<<<<<< Updated upstream
                         echo '<option value="34">médecin reférent 4</option>';
+=======
+                        
+>>>>>>> Stashed changes
                     ?>
                 </select> 
                 <input type="submit" name="Valider" value="Confirmer">
