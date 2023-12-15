@@ -17,9 +17,9 @@
                 <th>Date de consultation</th>
            </tr>
             <tr>
-                <td><input type="text" name="nom" value='<?php if (isset($_POST['medecin'])) echo $_POST['medecin'] ?>'></td>
-                <td><input type="text" name="prenom" value='<?php if (isset($_POST['patient'])) echo $_POST['patient'] ?>'></td>
-                <td><input type="date" name="date" value='<?php if (isset($_POST['date'])) echo $_POST['date'] ?>'></td>
+                <td><input type="text" name="medecin" value=' '></td>
+                <td><input type="text" name="patient" value=' '></td>
+                <td><input type="date" name="date" value=' '></td>
             </tr>   
         </table>
         <input type="reset" value="Vider" name="vider">
@@ -50,27 +50,27 @@
                     echo ("Erreur ".$e);
                 }
     
-                $stmt = $pdo->prepare(  'SELECT m.nom AS nomMed, m.prenom AS prenomMed, 
-                                        u.nom AS nomUsager, u.prenom AS prenomUsager, 
-                                        c.dateConsultation AS dateCons, 
-                                        c.heureDebut AS heure, c.duree AS duree
+                $stmt = $pdo->prepare(  "SELECT CONCAT(m.nom, ' ', m.prenom) as nomMed, CONCAT(u.nom, ' ', u.prenom)
+                                        as nomUsager, c.dateConsultation AS dateCons, c.heureDebut AS heure, c.duree
+                                        AS duree, CONCAT(c.idMedecin,c.dateConsultation) AS cle
                                         FROM medecin m, usager u, consultation c
-                                        WHERE c.idMedecin = m.idMedecin AND c.idUsager = u.idUsager 
-                                        AND CONCAT(m.nom," ",m.prenom) LIKE ? 
-                                        AND CONCAT(u.nom," ",u.prenom) LIKE ? 
-                                        AND c.dateConsultation = ?');
+                                        WHERE c.idMedecin = m.idMedecin AND c.idUsager = u.idUsager AND 
+                                        lower(CONCAT(' ', m.nom, ' ', m.prenom)) LIKE lower(?) AND 
+                                        lower(CONCAT(' ', u.nom, ' ', u.prenom)) LIKE lower(?) AND 
+                                        (dateConsultation = ? OR ? = '') ORDER BY dateConsultation DESC"    );
     
                 if ($stmt == false) {
                     echo "PREPARE ERROR";
                 } else {
-                    $stmt->execute(['$medecin', '$patient', '$date']);
+                    $stmt->execute(["%$medecin%", "%$patient%", "$date", "$date"]);
                     while($row = $stmt->fetch()) {
                         echo '<tr>';
-                        echo '<td>'.$row['nomMed'].' '.$row['prenomMed'].'</td>';
-                        echo '<td>'.$row['nomUsager'].' '.$row['prenomUsager'].'</td>';
+                        echo '<td>'.$row['nomMed'].'</td>';
+                        echo '<td>'.$row['nomUsager'].'</td>';
                         echo '<td>'.$row['dateCons'].'</td>';
                         echo '<td>'.$row['heure'].'</td>';
                         echo '<td>'.$row['duree'].'</td>';
+                        echo '<td>'.'<a href = \'suppression.php?id='.$row['cle'].'&type=consultation\'> Supprimer </a>'.'</td>'.'</tr>';
                         echo '</tr>';
                     }
                 }
