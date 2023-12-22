@@ -89,22 +89,17 @@
                                                 FROM medecin 
                                                 WHERE idMedecin NOT IN (SELECT medecinReferent
                                                                         FROM usager
-                                                                        WHERE idUsager = ".$_GET['idUsager']);
-                        echo '<option value="30">médecin reférent</option>';
+                                                                        WHERE idUsager = ".$_GET['idUsager'].')');
                         if ($stmt == false) {
                             echo "PREPARE ERROR";
-                            echo '<option value="31">médecin reférent 2</option>';
                         } else {
                             $stmt -> execute();
-                            echo '<option value="32">médecin reférent 3</option>';
                             while ($row = $stmt->fetch()) {
                                 $id = $row["idMedecin"];
                                 $titre = $row["civilite"].'. '.$row["nom"].' '.$row["prenom"];
                                 echo '<option value='.$id.'> '.$titre.'</option>';
-                                echo '<option value="30">médecin reférent</option>';
                             }
                         }
-                        echo '<option value="34">médecin reférent 4</option>';
                     ?>
                 </select> 
                 <input type="submit" name="Valider" value="Confirmer">

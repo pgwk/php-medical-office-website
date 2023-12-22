@@ -1,0 +1,135 @@
+.container {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+.justify-content-center {
+  -webkit-box-pack: center !important;
+  -ms-flex-pack: center !important;
+  justify-content: center !important;
+}
+
+.login-wrap {
+  display: flex;
+  flex-direction: column;
+  min-width: 200px;
+  position: relative;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 10px 34px -15px rgba(0, 0, 0, 0.24);
+}
+ 
+/**************/
+/* Responsive */
+/**************/
+
+ @media (min-width: 576px) {
+   .container {
+     max-width: 540px;
+   }
+ }
+
+ @media (min-width: 768px) {
+   .container {
+     max-width: 720px;
+   }
+ }
+
+ @media (min-width: 992px) {
+   .container {
+     max-width: 960px;
+   }
+ }
+
+ @media (min-width: 1200px) {
+   .container {
+     max-width: 1140px;
+   }
+ }
+
+/*************/
+/* Conteneur */
+/*************/
+
+.container {
+   min-width: 992px !important;
+ }
+
+.login-wrap h3 {
+  font-weight: 300;
+}
+
+.login-wrap .icon {
+  width: 80px;
+  height: 80px;
+  background: #1089ff;
+  border-radius: 50%;
+  font-size: 30px;
+  margin: 0 auto;
+  margin-bottom: 10px;
+}
+
+.login-wrap .icon span {
+  color: #fff;
+}
+ 
+/**************/
+/* Formulaire */
+/**************/
+ 
+.form-control {
+  display: block;
+  width: 100%;
+  height: calc(1.5em + 0.75rem + 2px);
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  -webkit-transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+  transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+  -o-transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+
+ 
+
+ .d-flex {
+   display: -webkit-box !important;
+   display: -ms-flexbox !important;
+   display: flex !important;
+ }
+
+ .align-items-center {
+   -webkit-box-align: center !important;
+   -ms-flex-align: center !important;
+   align-items: center !important;
+ }
+
+ .text-center {
+   text-align: center !important;
+ }
+

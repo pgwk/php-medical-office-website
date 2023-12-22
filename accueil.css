@@ -11,6 +11,15 @@ table{
     border-radius: 50px;
 }
 
+main{
+    display: flex;
+    flex-direction: column;
+}
+
+.conteneurCentre{
+    margin:auto;
+}
+
 .tableResultats th{
     border-bottom: 1px solid #60a2ff;
     text-align: left;
@@ -21,11 +30,14 @@ table{
 }
 
 .tableResultats td{
-    min-width: 100px;
-    padding: 10px;
+    padding: 10px 20px;
 }
 
 .tableResultats tr:nth-child(even){
     background-color: #f2efef;
+}
+
+.tableResultats tr td {
+    white-space: nowrap;
 }
 

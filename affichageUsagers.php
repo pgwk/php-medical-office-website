@@ -8,10 +8,30 @@
 <head>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="accueil.css">
+    <link rel="stylesheet" href="header.css">
     <title> Liste des usagers </title>
 </head>
 <body>
-    <h1> Parcourir </h1>
+    <header class="site-header">
+      <div class="wrapper site-header__wrapper">
+        <a href="#" class="brand">Cabinet</a>
+        <nav class="nav">
+          <button class="nav__toggle" aria-expanded="false" type="button">
+            menu
+          </button>
+          <ul class="nav__wrapper">
+            <li class="nav__item"><a href="#">Liste</a></li>
+            <li class="nav__item"><a href="#">About</a></li>
+            <li class="nav__item"><a href="#">Services</a></li>
+            <li class="nav__item"><a href="#">Hire us</a></li>
+            <li class="nav__item"><a href="#">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <main>
+    <h1> Liste des usagers </h1>
+    <div class="conteneurCentre">
     <form method="post" action="affichageUsagers.php">
             <table class="tableFiltres">
                 <tr>
@@ -89,11 +109,13 @@
                         '<td>'.$dataUsager['dateNaissance'].'</td>'.
                         '<td>'.$dataUsager['lieuNaissance'].'</td>'.
                         '<td>'.$dataUsager['nomMedecin'].' '.$dataUsager['prenomMedecin'].'</td>'.
-                        '<td>'.'<a href = \'modificationusager.php?idUsager='.$dataUsager[0].'\'> Modifier </a>'.'</td>'.
-                        '<td>'.'<a href = \'suppression.php?id='.$dataUsager[0].'&type=usager\'> Supprimer </a>'.'</td>'.'</tr>';
+                        '<td>'.'<a href = \'modificationusager.php?idUsager='.$dataUsager[0].'\'><img src=".\modify.png" alt=""width=30px></img></a>'.'</td>'.
+                        '<td>'.'<a href = \'suppression.php?id='.$dataUsager[0].'&type=usager\'><img src=".\delete.png" alt=""width=30px></img></a>'.'</td>'.'</tr>';
             }
         ?>
         </table> 
+          </div>
+          </main>
 </body>
 
 </html>

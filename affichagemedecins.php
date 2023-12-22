@@ -21,6 +21,7 @@
 <head>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="accueil.css">
+    <link rel="stylesheet" href="header.css">
     <title> Médecins </title>
 </head>
 <body>

@@ -25,14 +25,13 @@
         } catch (Exception $e) {
             echo ("Erreur ".$e);
         }
-        $hommesMoins25 = $pdo->query('SELECT COUNT(*) as Nb FROM usager WHERE civilite = \'M\' AND DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), dateNaissance)), \'%Y\') < 20')->fetch();
-        $femmesMoins25 = $pdo->query('SELECT COUNT(*) as Nb FROM usager WHERE civilite = \'Mme\' AND DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), dateNaissance)), \'%Y\') < 20')->fetch();
+        $hommesMoins25 = $pdo->query('SELECT COUNT(*) as Nb FROM usager WHERE civilite = \'M\' AND DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), dateNaissance)), \'%Y\') < 25')->fetch();
+        $femmesMoins25 = $pdo->query('SELECT COUNT(*) as Nb FROM usager WHERE civilite = \'Mme\' AND DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), dateNaissance)), \'%Y\') < 25')->fetch();
         $hommesEntre25et50 = $pdo->query('SELECT COUNT(*) as Nb FROM usager WHERE civilite = \'M\' AND DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), dateNaissance)), \'%Y\') BETWEEN 25 AND 50')->fetch();
         $femmesEntre25et50 = $pdo->query('SELECT COUNT(*) as Nb FROM usager WHERE civilite = \'Mme\' AND DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), dateNaissance)), \'%Y\') BETWEEN 25 AND 50')->fetch();
         $hommesPlus50 = $pdo->query('SELECT COUNT(*) as Nb FROM usager WHERE civilite = \'M\' AND DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), dateNaissance)), \'%Y\') > 50')->fetch();
         $femmesPlus50 = $pdo->query('SELECT COUNT(*) as Nb FROM usager WHERE civilite = \'Mme\' AND DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), dateNaissance)), \'%Y\') > 50')->fetch();
     ?>
-    <form method="post" action="affichageUsagers.php">
             <table class="tableFiltres">
                 <tr>
                     <th>Tranche d'âge</th>
@@ -56,8 +55,25 @@
                 </tr>     
             </table>
         
-        </form>
         <br><br>
+    <?php
+        echo '<table class="tableResultats"> 
+            <tr>
+                <th>Civilite</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Durée totale des consultations</th>
+            </tr>';
+        $reqDureeTotale = $pdo->query('SELECT nom, prenom, civilite, SUM(duree) as duree FROM medecin m, consultation c WHERE m.idMedecin = c.idMedecin GROUP BY nom, prenom, civilite');
+        while ($donnees = $reqDureeTotale->fetch()){
+            echo '<tr>
+                    <td>'.$donnees['nom'].'</td>
+                    <td>'.$donnees['prenom'].'</td>
+                    <td>'.$donnees['civilite'].'</td>
+                    <td>'.$donnees['duree'].'</td>
+                 </tr>';
+        }
+    ?>
         
 </body>
 
