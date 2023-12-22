@@ -13,8 +13,10 @@
                 if ($_SERVER["REQUEST_METHOD"] == "GET") {
                     if ($_GET['type']=='usager') {
                         echo '<p> Êtes vous sûr(e) de vouloir supprimer cet usager? </p>';
-                    } else {
+                    } if ($_GET['type']=='medecin') {
                         echo '<p> Êtes vous sûr(e) de vouloir supprimer ce médecin? </p>';
+                    } else {
+                        echo '<p> Êtes vous sûr(e) de vouloir supprimer cette consultation? </p>';
                     }
                     echo '<form action="suppression.php" method="post">';
                     echo '<input type="hidden" name="type" value="'.$_GET['type'].'">';
@@ -33,13 +35,15 @@
                     }
                     
                     if ($_REQUEST['type'] == 'usager') {
-                        $stmt = $pdo->prepare("DELETE FROM usager WHERE idUsager=".$_REQUEST['id'].";");
-                    } else {
-                        $stmt = $pdo->prepare("UPDATE usager SET medecinReferent = NULL WHERE medecinReferent=".$_REQUEST['id'].";");
+                        $stmt = $pdo->prepare("DELETE FROM usager WHERE idUsager=".$_REQUEST['id']);
+                    } else if ($_REQUEST['type'] == 'medecin') {
+                        $stmt = $pdo->prepare("UPDATE usager SET medecinReferent = NULL WHERE medecinReferent=".$_REQUEST['id']);
                         $stmt->execute();
-                        $stmt = $pdo->prepare("DELETE FROM medecin WHERE idMedecin=".$_REQUEST['id'].";");
+                        $stmt = $pdo->prepare("DELETE FROM medecin WHERE idMedecin=".$_REQUEST['id']);
+                    } else {
+                        $stmt = $pdo->prepare("DELETE FROM consultation WHERE CONCAT(idMedecin, dateConsultation) LIKE '".$_REQUEST['id']."'");
                     }
-                    
+
                     $stmt->execute();
                     
                     if ($stmt) {
