@@ -33,30 +33,8 @@
     <h1> Liste des usagers </h1>
     <div class="conteneurCentre">
     <form method="post" action="affichageUsagers.php">
-            <table class="tableFiltres">
-                <tr>
-                    <th>Nom</th>
-                    <th>Prenom</th>
-                    <th>Civilite</th>
-                    <th>Adresse</th>
-                    <th>Ville</th>
-                    <th>Code postal</th>
-                    <th>Numéro sécurité sociale</th>
-                    <th>Date de naissance</th>
-                    <th>Lieu de naissance</th>
-                </tr>
-                <tr>
-                    <td><input type="text" name="nom" value='<?php if (isset($_POST['nom'])) echo $_POST['nom'] ?>'></td>
-                    <td><input type="text" name="prenom" value='<?php if (isset($_POST['prenom'])) echo $_POST['prenom'] ?>'></td>
-                    <td><input type="text" name="civilite" value='<?php if (isset($_POST['civilite'])) echo $_POST['civilite'] ?>'></td>
-                    <td><input type="text" name="adresse" value='<?php if (isset($_POST['adresse'])) echo $_POST['adresse'] ?>'></td>
-                    <td><input type="text" name="ville" value='<?php if (isset($_POST['ville'])) echo $_POST['ville'] ?>'></td>
-                    <td><input type="text" name="codePostal" value='<?php if (isset($_POST['codePostal'])) echo $_POST['codePostal'] ?>'></td>
-                    <td><input type="text" name="numeroSecuriteSociale" value='<?php if (isset($_POST['numeroSecuriteSociale'])) echo $_POST['numeroSecuriteSociale'] ?>'></td>
-                    <td><input type="text" name="dateNaissance" value='<?php if (isset($_POST['dateNaissance'])) echo $_POST['dateNaissance'] ?>'></td>
-                    <td><input type="text" name="lieuNaissance" value='<?php if (isset($_POST['lieuNaissance'])) echo $_POST['lieuNaissance'] ?>'></td>
-            </tr>   
-            </table>
+  
+            <td><input type="text" name="criteres" value='<?php if (isset($_POST['criteres'])) echo $_POST['criteres'] ?>'></td>
             
             <input type="reset" value="Vider" name="vider">
             <input type="submit" value="Rechercher" name="valider">
@@ -87,7 +65,14 @@
                             FROM usager u
                             LEFT JOIN medecin M ON u.medecinReferent = m.idMedecin';
 
-            $listeCriteres = array('nom', 'prenom', 'civilite', 'adresse', 'ville', 'codePostal', 'numeroSecuriteSociale', 'dateNaissance', 'lieuNaissance');
+            $listeCriteres = preg_split('/\s+/', $_POST['criteres']);
+            echo count($listeCriteres);
+            $dernierEspace = 0;
+            if (ctype_space($listeCriteres[count($listeCriteres)])){
+              $dernierEspace = 1;
+            }
+            echo ":".$listeCriteres[count($listeCriteres) - 1].":";
+            echo count($listeCriteres) - $dernierEspace;
             $firstCriteria = true;
             for ($i = 0; $i <= 8; $i++){
                 if (!empty($_POST[$listeCriteres[$i]])){

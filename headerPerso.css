@@ -1,0 +1,125 @@
+:root{
+    --bleu: #107ACA;
+    --blanc: #ffffff;
+    --gris: #ebebeb;
+}
+
+body{
+    margin:0;
+}
+
+#navigation{
+    background-color: var(--bleu);
+}
+
+/* ############### Menu de navigation du header ############### */
+
+.headings{
+    margin:0px;
+    display:flex;
+    padding:0px;
+    background-color: var(--bleu);
+    height:45px;
+    list-style-type:none;
+}
+
+.headings > li{
+    font-size:18px;
+    transition: all 0.3s ease;
+}
+
+.headings > li > a{
+    padding-top:11px;
+    color: var(--gris);
+    text-decoration:none;
+    transition:0.3s;
+}
+
+#navigation > ul > li{
+    float: left;
+    width: 25%;
+    text-align: center;
+    position: relative;
+}
+
+#hamburger{
+    display:none;
+    flex-direction: column;
+    margin:auto;
+    transform:scale(0.8);
+}
+
+.defiler{
+    display: none;
+}
+
+#hamburger span{
+    display: block;
+    width: 35px;
+    height: 5px;
+    background-color: rgb(255, 255, 255);
+    /* margin: 5px 0; */
+    border-radius:2px;
+    margin:5px auto 5px auto;
+}
+
+
+/* ############### Effets lorsque l'on survole les éléments ############### */
+
+.headings a:hover{
+    cursor: pointer;
+    color: var(--blanc);
+}
+
+a:hover .liste_deroulante{
+    display:block;
+}
+
+.lien_header {
+    display: inline-block;
+    text-decoration: none;
+}
+
+.lien_header::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 2px;
+    background: #ffffff;
+    transition: width .3s;
+}
+
+.lien_header:hover::after {
+    width: 100%;
+}
+
+/* ############### Personnalisation du menu déroulant des compétences ############### */
+
+.liste_deroulante{
+    display:none;
+    background-color:var(--bleu);
+    list-style-type: none;
+    position:absolute;
+    top:45px;
+    padding:0px;
+    width:100%;
+    z-index:20;
+    border-bottom:4px solid #f50c1b;
+}
+
+.liste_deroulante li{
+    float: none;
+    width:100%;
+    text-align: center;
+    display:flex;
+    transition: 0.3s;
+}
+
+.liste_deroulante li a{
+    text-decoration: none;
+    padding:10px 0;
+    color:white;
+    width:100%;
+    transition:0.3s;
+}
+

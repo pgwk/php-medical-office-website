@@ -21,10 +21,38 @@
 <head>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="accueil.css">
-    <link rel="stylesheet" href="header.css">
+    <link rel="stylesheet" href="headerPerso.css">
     <title> Médecins </title>
 </head>
 <body>
+<header>
+        <nav id="navigation">
+			<label for="hamburger_defiler" id="hamburger">
+				<span></span>
+				<span></span>
+				<span></span>
+			</label>
+			<input class="defiler" type="checkbox" id="hamburger_defiler" role="button" aria-pressed="true">
+            <ul class="headings">
+                <li><a class="lien_header" href="Accueil.html">ACCUEIL</a></li>
+                <li class="deroulant"><a class="lien_header">AJOUTER ▼</a>
+                    <ul class="liste_deroulante">
+                        <li><a class="lien_header" href="Competence1.html">UN USAGER</a></li>
+                        <li><a class="lien_header" href="Competence2.html">UN MÉDECIN</a></li>
+                        <li><a class="lien_header" href="Competence3.html">UNE CONSULTATION</a></li>
+                    </ul>
+                </li>
+                <li class="deroulant"><a class="lien_header">CONSULTER ▼</a>
+                    <ul class="liste_deroulante">
+                        <li><a class="lien_header" href="Competence1.html">LES USAGERS</a></li>
+                        <li><a class="lien_header" href="Competence2.html">LES MÉDECINS</a></li>
+                        <li><a class="lien_header" href="Competence3.html">LES CONSULTATIONS</a></li>
+                    </ul>
+                </li>
+                <li><a class="lien_header" href="Contact.html">STATISTIQUES</a></li>
+            </ul>
+        </nav>
+    </header>
     <h1> Parcourir </h1>
 
     <form method="post" action="affichagemedecins.php">
