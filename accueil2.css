@@ -1,0 +1,26 @@
+body {
+    font-family: 'Helvetica Neue', Helvetica, Arial;
+}
+
+.bouton {
+
+    background-color: #60a2df;
+    border-style: none;
+    border-radius: 6%;
+    color: white;
+    font-size: 16px;
+    padding: 15px 32px;
+    align-self: center;
+
+}
+
+.divBtns {
+
+    display: grid;
+    align-items: center;
+    background-color: #e8ebe9;
+    padding: 50px;
+    width: 300px;
+
+}
+
