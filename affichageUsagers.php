@@ -8,27 +8,9 @@
 <head>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="accueil.css">
-    <link rel="stylesheet" href="header.css">
     <title> Liste des usagers </title>
 </head>
 <body>
-    <header class="site-header">
-      <div class="wrapper site-header__wrapper">
-        <a href="#" class="brand">Cabinet</a>
-        <nav class="nav">
-          <button class="nav__toggle" aria-expanded="false" type="button">
-            menu
-          </button>
-          <ul class="nav__wrapper">
-            <li class="nav__item"><a href="#">Liste</a></li>
-            <li class="nav__item"><a href="#">About</a></li>
-            <li class="nav__item"><a href="#">Services</a></li>
-            <li class="nav__item"><a href="#">Hire us</a></li>
-            <li class="nav__item"><a href="#">Contact</a></li>
-          </ul>
-        </nav>
-      </div>
-    </header>
     <main>
     <h1> Liste des usagers </h1>
     <div class="conteneurCentre">
@@ -61,29 +43,42 @@
                 echo ("Erreur ".$e);
             }
 
+            // Début de la requête, on sélectionne tous les usages et leur potentiel médecin référent
             $reqUsagers = ' SELECT u.*, m.nom as nomMedecin, m.prenom as prenomMedecin
                             FROM usager u
-                            LEFT JOIN medecin M ON u.medecinReferent = m.idMedecin';
+                            LEFT JOIN medecin m ON u.medecinReferent = m.idMedecin';
 
+            // On sépare les critères saisis avec les espaces
             $listeCriteres = preg_split('/\s+/', $_POST['criteres']);
-            echo count($listeCriteres);
-            $dernierEspace = 0;
-            if (ctype_space($listeCriteres[count($listeCriteres)])){
-              $dernierEspace = 1;
+
+            $nombreCriteres = count($listeCriteres);
+            // Si le dernier critère est simplement un espace, on retire un au nombre de critères
+            if ($listeCriteres[count($listeCriteres) - 1] == ''){
+              $nombreCriteres--;
             }
-            echo ":".$listeCriteres[count($listeCriteres) - 1].":";
-            echo count($listeCriteres) - $dernierEspace;
-            $firstCriteria = true;
-            for ($i = 0; $i <= 8; $i++){
-                if (!empty($_POST[$listeCriteres[$i]])){
-                    $reqUsagers = $firstCriteria ? $reqUsagers.' WHERE u.' : $reqUsagers.' AND u.';
-                    $reqUsagers = $reqUsagers.$listeCriteres[$i].' = \''.$_POST[$listeCriteres[$i]].'\'';
-                    $firstCriteria = false;
-                } 
+            
+            // On vérifie, pour chacune des colonnes, si elle correspond à un des critère
+            $listeColonnes = array('u.nom', 'u.prenom', 'u.civilite', 'u.ville', 'u.codePostal');
+            if ($nombreCriteres > 0){
+                $reqUsagers = $reqUsagers.' WHERE ';
+                for ($i = 0; $i < count($listeColonnes); $i++) {
+                    for ($j = 0; $j < $nombreCriteres; $j++) {
+                        $reqUsagers = $reqUsagers.$listeColonnes[$i].' LIKE :critere'.$j.' OR ';
+                    }
+                }
+                // Pour enlever le dernier 'OR'
+                $reqUsagers = substr($reqUsagers, 0, -4);
             }
 
-            $resUsagers = $pdo->query($reqUsagers);
-            while ($dataUsager = $resUsagers->fetch()){
+            // On remplace les ':critereX' avec un prepared statement
+            $stmt = $pdo->prepare($reqUsagers);
+            for ($i = 0; $i < $nombreCriteres; $i++){
+              $stmt->bindParam(':critere'.$i, $listeCriteres[$i]);
+            }
+
+            // On execute la requête et on affiche toutes les lignes renvoyées
+            if (!$stmt->execute()) { print_r($stmt->errorInfo()); }
+            while ($dataUsager = $stmt->fetch()){
                 echo '<tr><td>'.$dataUsager['nom'].'</td>'.
                         '<td>'.$dataUsager['prenom'].'</td>'.
                         '<td>'.$dataUsager['civilite'].'</td>'.                            
@@ -94,8 +89,8 @@
                         '<td>'.$dataUsager['dateNaissance'].'</td>'.
                         '<td>'.$dataUsager['lieuNaissance'].'</td>'.
                         '<td>'.$dataUsager['nomMedecin'].' '.$dataUsager['prenomMedecin'].'</td>'.
-                        '<td>'.'<a href = \'modificationusager.php?idUsager='.$dataUsager[0].'\'><img src=".\modify.png" alt=""width=30px></img></a>'.'</td>'.
-                        '<td>'.'<a href = \'suppression.php?id='.$dataUsager[0].'&type=usager\'><img src=".\delete.png" alt=""width=30px></img></a>'.'</td>'.'</tr>';
+                        '<td>'.'<a href = \'modificationusager.php?idUsager='.$dataUsager[0].'\'><img src="Images/modifier.png" alt=""width=30px></img></a>'.'</td>'.
+                        '<td>'.'<a href = \'suppression.php?id='.$dataUsager[0].'&type=usager\'><img src="Images/supprimer.png" alt=""width=30px></img></a>'.'</td>'.'</tr>';
             }
         ?>
         </table> 

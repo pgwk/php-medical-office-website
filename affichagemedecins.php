@@ -25,7 +25,10 @@
     <title> Médecins </title>
 </head>
 <body>
-<header>
+    <header id="menu_navigation">
+        <div id="logo_site">
+            <img src="delete.png" width="50">
+        </div>
         <nav id="navigation">
 			<label for="hamburger_defiler" id="hamburger">
 				<span></span>
@@ -34,25 +37,26 @@
 			</label>
 			<input class="defiler" type="checkbox" id="hamburger_defiler" role="button" aria-pressed="true">
             <ul class="headings">
-                <li><a class="lien_header" href="Accueil.html">ACCUEIL</a></li>
-                <li class="deroulant"><a class="lien_header">AJOUTER ▼</a>
+                <li><a class="lien_header" href="Accueil.html">Accueil</a></li>
+                <li class="deroulant"><a class="lien_header">Ajouter</a>
                     <ul class="liste_deroulante">
-                        <li><a class="lien_header" href="Competence1.html">UN USAGER</a></li>
-                        <li><a class="lien_header" href="Competence2.html">UN MÉDECIN</a></li>
-                        <li><a class="lien_header" href="Competence3.html">UNE CONSULTATION</a></li>
+                        <li><a class="lien_header" href="creationusager.php">Un usager</a></li>
+                        <li><a class="lien_header" href="creationmedecin.php">Un médecin</a></li>
+                        <li><a class="lien_header" href="creationconsultation.php">Une consultation</a></li>
                     </ul>
                 </li>
-                <li class="deroulant"><a class="lien_header">CONSULTER ▼</a>
+                <li class="deroulant"><a class="lien_header">Consulter</a>
                     <ul class="liste_deroulante">
-                        <li><a class="lien_header" href="Competence1.html">LES USAGERS</a></li>
-                        <li><a class="lien_header" href="Competence2.html">LES MÉDECINS</a></li>
-                        <li><a class="lien_header" href="Competence3.html">LES CONSULTATIONS</a></li>
+                        <li><a class="lien_header" href="Competence1.html">Les usagers</a></li>
+                        <li><a class="lien_header" href="Competence2.html">Les médecins</a></li>
+                        <li><a class="lien_header" href="Competence3.html">Les consultations</a></li>
                     </ul>
                 </li>
-                <li><a class="lien_header" href="Contact.html">STATISTIQUES</a></li>
+                <li><a class="lien_header" href="Contact.html">Statistiques</a></li>
             </ul>
         </nav>
     </header>
+    
     <h1> Parcourir </h1>
 
     <form method="post" action="affichagemedecins.php">
