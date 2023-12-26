@@ -5,10 +5,10 @@
     <meta charset="utf-8">
     <title> Ajout d'un usager </title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="headerPerso.css">
+    <link rel="stylesheet" href="header.css">
 </head>
 
-<body>
+<body id="body_fond">
     <header id="menu_navigation">
         <div id="logo_site">
             <img src="delete.png" width="50">
@@ -24,19 +24,19 @@
                 <li><a class="lien_header" href="Accueil.html">Accueil</a></li>
                 <li class="deroulant"><a class="lien_header">Ajouter</a>
                     <ul class="liste_deroulante">
-                        <li><a class="lien_header" href="creationusager.php">Un usager</a></li>
-                        <li><a class="lien_header" href="creationmedecin.php">Un médecin</a></li>
+                        <li><a class="lien_header" href="ajoutUsager.php">Un usager</a></li>
+                        <li><a class="lien_header" href="ajoutMedecin.php">Un médecin</a></li>
                         <li><a class="lien_header" href="creationconsultation.php">Une consultation</a></li>
                     </ul>
                 </li>
                 <li class="deroulant"><a class="lien_header">Consulter</a>
                     <ul class="liste_deroulante">
-                        <li><a class="lien_header" href="Competence1.html">Les usagers</a></li>
-                        <li><a class="lien_header" href="Competence2.html">Les médecins</a></li>
-                        <li><a class="lien_header" href="Competence3.html">Les consultations</a></li>
+                        <li><a class="lien_header" href="affichageUsagers.php">Les usagers</a></li>
+                        <li><a class="lien_header" href="affichageMedecins.php">Les médecins</a></li>
+                        <li><a class="lien_header" href="affichageConsultations.php">Les consultations</a></li>
                     </ul>
                 </li>
-                <li><a class="lien_header" href="Contact.html">Statistiques</a></li>
+                <li><a class="lien_header" href="statistiques.php">Statistiques</a></li>
             </ul>
         </nav>
     </header>

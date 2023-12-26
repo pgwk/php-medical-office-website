@@ -1,9 +1,15 @@
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f4f4f4;
+    background-color: #ffffff;
 }
 
-/* ############### Popup erreur ou succes ############### */
+#body_fond {
+    background: url(Images/fond.png);
+    background-size: 400px;
+    background-color: #ebebeb;
+}
+
+/* =========== Popup erreur ou succes =========== */
 
 .popup {
     margin: 20px auto 0px auto;
@@ -16,17 +22,15 @@ body {
 
 .succes {
     background-color: #4CAF50;
-    /* Green background for success */
     color: #12571a;
 }
 
 .erreur {
     background-color: rgba(214, 51, 51, 0.8);
-    /* Red background for errors */
     color: #470e0e;
 }
 
-/* ############### Formulaire (Ajout/Modification Usager/Medecin) ############### */
+/* =========== Formulaire (Ajout/Modification Usager/Medecin) =========== */
 
 .titre_formulaire h1 {
     text-align: center;
@@ -54,7 +58,7 @@ body {
     overflow: hidden;
 }
 
-/* ############### Inputs des formulaires ############### */
+/* =========== Inputs des formulaires =========== */
 
 input[type="text"],
 input[type="date"],
@@ -120,7 +124,7 @@ input[type="radio"] {
     margin-left: 20px;
 }
 
-.choix_civilite > label {
+.choix_civilite>label {
     margin-right: 15px;
 }
 
@@ -131,7 +135,7 @@ input[type="radio"] {
     pointer-events: none;
 }
 
-/* ############### Disposition des éléments dans les formulaires ############### */
+/* =========== Disposition des éléments dans les formulaires =========== */
 
 .ligne_formulaire {
     display: flex;
@@ -172,4 +176,136 @@ input[type="radio"] {
 
 .input-moitie {
     width: 100%;
+}
+
+/* ========================================= */
+/* =============== Connexion =============== */
+/* ========================================= */
+
+#conteneur_connexion {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+    margin: 100px auto;
+    font-family: 'Arial', sans-serif;
+}
+
+#header_connexion {
+    background-color: #107ACA;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+#header_connexion h2 {
+    margin: 0;
+}
+
+#corps_connexion {
+    padding: 20px;
+    background-color: #ffffff;
+}
+
+#corps_connexion form {
+    display: flex;
+    flex-direction: column;
+}
+
+#corps_connexion input[type=text],
+#corps_connexion input[type=password] {
+    padding: 10px;
+    background: url(Images/utilisateur.png) no-repeat scroll 8px 50%;
+    padding-left: 40px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-size: 16px;
+}
+
+#corps_connexion input[type=password] {
+    background: url(Images/motDePasse.png) no-repeat scroll 8px 50%;
+    background-size: 16px;
+}
+
+#corps_connexion input[type=submit] {
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    margin-left: 0;
+    background-color: #107ACA;
+    color: white;
+    cursor: pointer;
+}
+
+#corps_connexion input[type=submit]:hover {
+    background-color: #2789d4;
+}
+
+#footer_connexion {
+    background-color: #f6f6f6;
+    padding: 10px;
+    text-align: center;
+}
+
+#footer_connexion p {
+    margin: 0;
+    color: #333;
+}
+
+/* =================================================================== */
+/* =============== Pages affichages (Medecins/Usagers) =============== */
+/* =================================================================== */
+
+.main_affichage {
+    margin: 10px 80px 60px 80px;
+}
+
+.conteneur_table_recherche {
+    margin-bottom: 20px;
+}
+
+.formulaire_table {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1em;
+}
+
+.formulaire_table input[type="text"] {
+    flex-grow: 2;
+    margin-right: 8px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+#table_affichage {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#table_affichage th {
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    user-select: none;
+}
+
+#table_affichage th,
+#table_affichage td {
+    padding: 8px;
+    border: 1px solid #ddd;
+    text-align: left;
+    max-width: 200px;
+    text-overflow: ellipsis;
+}
+
+#table_affichage tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.nombre_lignes {
+    text-align: center;
+    margin-bottom: 20px;
 }

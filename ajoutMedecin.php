@@ -5,10 +5,10 @@
     <meta charset="utf-8">
     <title> Ajout d'un médecin </title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="headerPerso.css">
+    <link rel="stylesheet" href="header.css">
 </head>
 
-<body>
+<body id='body_fond'>
 
     <header id="menu_navigation">
         <div id="logo_site">
