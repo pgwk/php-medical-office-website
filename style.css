@@ -60,12 +60,10 @@ body {
 
 /* =========== Inputs des formulaires =========== */
 
-input[type="text"],
-input[type="date"],
-input[type="submit"],
-input[type="reset"],
+input,
 select {
     width: 100%;
+    height: 40px;
     padding: 10px;
     margin: 10px 0;
     border: 1px solid #ddd;
@@ -76,6 +74,11 @@ select {
 .conteneur_boutons {
     display: flex;
     justify-content: flex-end;
+}
+
+.formulaire_table .conteneur_boutons {
+    margin-bottom: 0;
+    margin-top: auto;
 }
 
 input[type="submit"],
@@ -124,7 +127,7 @@ input[type="radio"] {
     margin-left: 20px;
 }
 
-.choix_civilite>label {
+.choix_civilite > label {
     margin-right: 15px;
 }
 
@@ -157,14 +160,6 @@ input[type="radio"] {
     flex: 1;
 }
 
-.input-large {
-    width: 100%;
-}
-
-.input-petit {
-    width: 100%;
-}
-
 .colonne_formulaire.moitie {
     flex: 1;
     margin-right: 10px;
@@ -172,10 +167,6 @@ input[type="radio"] {
 
 .colonne_formulaire.moitie:last-child {
     margin-right: 0;
-}
-
-.input-moitie {
-    width: 100%;
 }
 
 /* ========================================= */
@@ -292,13 +283,23 @@ input[type="radio"] {
     user-select: none;
 }
 
+#table_affichage th:first-of-type {border-top-left-radius: 8px;}
+#table_affichage th:last-of-type {border-top-right-radius: 8px;}
+
+#table_affichage tbody tr:first-of-type {border-top: 1px solid #ddd;}
+#table_affichage tr:last-of-type {border-bottom: 1px solid #ddd;}
+
 #table_affichage th,
 #table_affichage td {
     padding: 8px;
-    border: 1px solid #ddd;
     text-align: left;
     max-width: 200px;
     text-overflow: ellipsis;
+}
+
+#table_affichage td {
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
 }
 
 #table_affichage tr:nth-child(even) {

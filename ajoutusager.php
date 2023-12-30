@@ -132,7 +132,7 @@
         </div>
         <div class="ligne_formulaire">
             <div class="colonne_formulaire moitie">
-                Adresse <input type="text" class="input-large" name="adr" value="" maxlength=100 require>
+                Adresse <input type="text" name="adr" value="" maxlength=100 class="espaces_permis" required>
             </div>
         </div>
         <div class="ligne_formulaire">
@@ -140,20 +140,20 @@
                 Ville <input type="text" name="ville" value="" maxlength=50 required>
             </div>
             <div class="colonne_formulaire petit">
-                Code postal <input type="text" class="input-petit" name="cp" value="" minlength=5 maxlength=5 required>
+                Code postal <input type="text" name="cp" value="" minlength=5 maxlength=5 oninput="chiffresUniquement(event)" required>
             </div>
         </div>
         <div class="ligne_formulaire">
             <div class="colonne_formulaire moitie">
-                N° Sécurité sociale <input type="text" name="nss" value="" minlength=15 maxlength=15 required>
+                N° Sécurité sociale <input type="text" name="nss" value="" minlength=15 maxlength=15 oninput="chiffresUniquement(event)" required>
             </div>
         </div>
         <div class="ligne_formulaire">
             <div class="colonne_formulaire moitie">
-                Date de naissance <input type="date" class="input-moitie" name="date" value="" required>
+                Date de naissance <input type="date" name="date" value="" required>
             </div>
             <div class="colonne_formulaire moitie">
-                Lieu de naissance <input type="text" class="input-moitie" name="lieu" value="" maxlength=50 required>
+                Lieu de naissance <input type="text" name="lieu" value="" maxlength=50 required>
             </div>
         </div>
         Médecin reférent <select name="idMed" id="selecteur_medecin_referent">
@@ -185,6 +185,8 @@
             <input type="submit" name="Confirmer" value="Confirmer">
         </div>
     </form>
+    <!-- Script pour trier une table en cliquant sur une colonne -->
+    <script src="format-texte-input.js"></script>
 </body>
 
 </html>
