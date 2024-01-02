@@ -34,6 +34,7 @@
                         echo ("Erreur : ".$e);
                     }
                     
+                    $arguments = array();
                     if ($_REQUEST['type'] == 'usager') {
                         $stmt = $pdo->prepare("DELETE FROM usager WHERE idUsager=".$_REQUEST['id']);
                     } else if ($_REQUEST['type'] == 'medecin') {
@@ -41,15 +42,15 @@
                         $stmt->execute();
                         $stmt = $pdo->prepare("DELETE FROM medecin WHERE idMedecin=".$_REQUEST['id']);
                     } else {
-                        $stmt = $pdo->prepare("DELETE FROM consultation WHERE CONCAT(idMedecin, dateConsultation) LIKE '".$_REQUEST['id']."'");
+                        $stmt = $pdo->prepare("DELETE FROM consultation WHERE idMedecin = ? AND dateConsultation = ? AND heureDebut = ?");
+                        $arguments = explode('$', $_POST["id"]);
                     }
-
-                    $stmt->execute();
+                    if (!$stmt) { echo "Erreur lors d'un prepare statement : " . $stmt->errorInfo(); exit(1); }
                     
-                    if ($stmt) {
+                    if ($stmt->execute($arguments)) {
                         echo 'Suppression effectuée!';
                     } else {
-                        echo 'PREPARE ERROR';
+                        echo "Erreur lors d'un execute statement : " . $stmt->errorInfo(); exit(1);
                     }
                     
                 }

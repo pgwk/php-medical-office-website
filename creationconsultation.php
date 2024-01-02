@@ -92,23 +92,21 @@
                 }
             }
         } else {
-            $message = 'Erreur lors de la tentative d\'ajout de la consultation';
+            $message = "Erreur lors d'un execute statement : " . $stmt->errorInfo();
             $classeMessage = 'erreur';
         }
 
         if (!$consulationsChevauchantes) {
             $stmt = $pdo->prepare("INSERT INTO consultation VALUES (?,?,?,?,?)");
-            try {
-                $stmt->execute(["$idMed", "$date", "$heure", "$duree", "$idUsager"]);
-                if ($stmt) {
-                    $message = 'La consultation du <strong>' . $date . '</strong> à <strong>' . $heure . '</strong> a été ajoutée !';
-                    $classeMessage = 'succes';
-                } else {
-                    $message = 'Erreur lors de la tentative d\'ajout de la consultation';
-                    $classeMessage = 'erreur';
-                }
-            } catch (PDOException $e) {
-                $message = 'Une consultation pour ce médecin sur ce créneau existe déjà';
+            $stmt->execute(["$idMed", "$date", "$heure", "$duree", "$idUsager"]);
+            if ($stmt) {
+                $elementsDate = explode('-', $date);
+                $dateFormatee = $elementsDate[2] . '/' . $elementsDate[1] . '/' . $elementsDate[0];
+                $nomMedecin = $pdo->query("SELECT CONCAT(' ', nom, ' ', prenom) FROM Medecin WHERE idMedecin = " . $idMed)->fetchColumn();
+                $message = 'La consultation du <strong>' . $dateFormatee . '</strong> à <strong>' . str_replace(':', 'H', $heure) . '</strong> pour le médecin <strong>'. $nomMedecin . '</strong> a été ajoutée !';
+                $classeMessage = 'succes';
+            } else {
+                $message = 'Erreur lors de la tentative d\'ajout de la consultation';
                 $classeMessage = 'erreur';
             }
         } else {
@@ -166,10 +164,10 @@
                 Date de consultation <input type="date" name="date" value="" min="<?php echo $today ?>" required>
             </div>
             <div class="colonne_formulaire moitie">
-                Horaire de consultation <input type="time" name="heureD" min="06:00" max="20:00" required>
+                Horaire de consultation <input type="time" name="heureD" min="08:00" max="20:00" value="08:00" required>
             </div>
             <div class="colonne_formulaire petit">
-                Durée de consultation <input type="time" name="duree" min="00:05" max="02:00" required>
+                Durée de consultation <input type="time" name="duree" min="00:05" max="02:00" value="00:30" required>
             </div>
         </div>
         <div class="conteneur_boutons">

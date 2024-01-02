@@ -38,7 +38,7 @@
 
         $reqConsultations = "SELECT CONCAT(m.nom, ' ', m.prenom) as nomMed, 
                                     CONCAT(u.nom, ' ', u.prenom) as nomUsager, 
-                                    CONCAT(c.idMedecin,c.dateConsultation) as cle,
+                                    CONCAT(c.idMedecin, '$', c.dateConsultation, '$', c.heureDebut) as cle,
                                     dateConsultation, heureDebut, duree
                                 FROM medecin m, usager u, consultation c 
                                 WHERE c.idMedecin = m.idMedecin AND c.idUsager = u.idUsager ";
@@ -56,7 +56,7 @@
         $reqConsultations = $reqConsultations . "ORDER BY dateConsultation DESC, heureDebut DESC;";
 
         $stmt = $pdo->prepare($reqConsultations);
-        if ($stmt == false) { echo "Erreur lors d'un prepare statement : " . $stmt->errorInfo(); }
+        if (!$stmt) { echo "Erreur lors d'un prepare statement : " . $stmt->errorInfo(); }
 
         if ($stmt->execute($arguments)) {
             // On affiche toutes les lignes renvoyées ou un message si rien n'a été trouvé
@@ -80,7 +80,8 @@
                         '<td>' . $dateFormatee . '</td>' .
                         '<td>' . str_replace(':', 'H', substr($dataConsultation['heureDebut'], 0, 5)) . '</td>' .
                         '<td>' . str_replace(':', 'H', substr($dataConsultation['duree'], 0, 5)) . '</td>' .
-                        '<td>' . '<a href = \'suppression.php?id=' . $dataConsultation['cle'] . '&type=consultation\'><img src="Images/modifier.png" alt=""width=30px></a></td></tr>';
+                        '<td>' . '<a href = \'modificationConsultation.php?id=' . $dataConsultation['cle'] . '\'><img src="Images/modifier.png" alt=""width=30px></a></td>' .
+                        '<td>' . '<a href = \'suppression.php?id=' . $dataConsultation['cle'] . '&type=consultation\'><img src="Images/supprimer.png" alt=""width=30px></a></td></tr>';
                 }
                 echo '</tbody></table>';
             } else {

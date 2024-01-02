@@ -117,7 +117,8 @@
             <input type="submit" name="Confirmer" value="Confirmer">
         </div>
     </form>
-
+    <!-- Script pour formater les inputs -->
+    <script src="format-texte-input.js"></script>
 </body>
 
 </html>
