@@ -11,7 +11,7 @@
 <body id="body_fond">
     <header id="menu_navigation">
         <div id="logo_site">
-            <img src="delete.png" width="50">
+            <a href="accueil.html"><img src="Images/logo.png" width="250"></a>
         </div>
         <nav id="navigation">
             <label for="hamburger_defiler" id="hamburger">
@@ -22,18 +22,18 @@
             <input class="defiler" type="checkbox" id="hamburger_defiler" role="button" aria-pressed="true">
             <ul class="headings">
                 <li><a class="lien_header" href="Accueil.html">Accueil</a></li>
-                <li class="deroulant"><a class="lien_header">Ajouter</a>
-                    <ul class="liste_deroulante">
-                        <li><a class="lien_header" href="ajoutUsager.php">Un usager</a></li>
-                        <li><a class="lien_header" href="ajoutMedecin.php">Un médecin</a></li>
-                        <li><a class="lien_header" href="creationconsultation.php">Une consultation</a></li>
-                    </ul>
-                </li>
                 <li class="deroulant"><a class="lien_header">Consulter</a>
                     <ul class="liste_deroulante">
                         <li><a class="lien_header" href="affichageUsagers.php">Les usagers</a></li>
                         <li><a class="lien_header" href="affichageMedecins.php">Les médecins</a></li>
                         <li><a class="lien_header" href="affichageConsultations.php">Les consultations</a></li>
+                    </ul>
+                </li>
+                <li class="deroulant"><a class="lien_header">Ajouter</a>
+                    <ul class="liste_deroulante">
+                        <li><a class="lien_header" href="ajoutUsager.php">Un usager</a></li>
+                        <li><a class="lien_header" href="ajoutMedecin.php">Un médecin</a></li>
+                        <li><a class="lien_header" href="ajoutConsultation.php">Une consultation</a></li>
                     </ul>
                 </li>
                 <li><a class="lien_header" href="statistiques.php">Statistiques</a></li>
@@ -171,9 +171,9 @@
                 echo "PREPARE ERROR";
             } else {
                 $stmt->execute();
-                while ($ligne_formulaire = $stmt->fetch()) {
-                    $id = $ligne_formulaire["idMedecin"];
-                    $titre = $ligne_formulaire["civilite"] . '. ' . $ligne_formulaire["nom"] . ' ' . $ligne_formulaire["prenom"];
+                while ($dataMedecin = $stmt->fetch()) {
+                    $id = $dataMedecin["idMedecin"];
+                    $titre = $dataMedecin["civilite"] . '. ' . $dataMedecin["nom"] . ' ' . $dataMedecin["prenom"];
                     echo '<option value=' . $id . '> ' . $titre . '</option>';
                 }
             }

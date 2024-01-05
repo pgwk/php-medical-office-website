@@ -68,8 +68,10 @@
                     Prénom <input type="text" name="prenom" value="">
                 </div>
                 <div class="conteneur_boutons">
-                    <input type="reset" value="Vider">
                     <input type="submit" value="Rechercher" name="valider">
+                    <a href="ajoutMedecin.php" class="lien_ajouter">
+                        <div class="bouton_ajouter"><img src="Images/ajouter.png" width="20px"/>Ajouter</div>
+                    </a>
                 </div>
             </form>
             </div>

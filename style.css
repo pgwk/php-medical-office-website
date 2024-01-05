@@ -61,6 +61,7 @@ body {
 /* =========== Inputs des formulaires =========== */
 
 input,
+.bouton_ajouter,
 select {
     width: 100%;
     height: 40px;
@@ -82,7 +83,8 @@ select {
 }
 
 input[type="submit"],
-input[type="reset"] {
+input[type="reset"],
+.bouton_ajouter {
     font-size: 16px;
     width: auto;
     background-color: #107ACA;
@@ -97,8 +99,25 @@ input[type="reset"] {
     background-color: #bbbbbb;
 }
 
+.bouton_ajouter {
+    background-color: #4CAF50;
+    display: flex;
+    z-index: inherit;
+    align-items: center;
+    text-decoration: none;
+}
+
+.lien_ajouter {
+    text-decoration: none;
+}
+
+.bouton_ajouter img {
+    margin-right: 5px;
+}
+
 input[type="submit"]:hover,
-input[type="reset"]:hover {
+input[type="reset"]:hover,
+.bouton_ajouter {
     opacity: 0.9;
 }
 

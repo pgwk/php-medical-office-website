@@ -124,6 +124,7 @@ body{
     box-shadow: 0px 10px 34px -15px rgba(0, 0, 0, 0.24);
     transition: opacity 0.3s ease-in-out;
     opacity: 0;
+    z-index: 10;
 }
 
 .liste_deroulante li {
