@@ -1,3 +1,8 @@
+<?php session_start();
+    require('fonctions.php');
+    verifierAuthentification();
+    $pdo = creerConnexion();
+?>
 <!DOCTYPE HTML>
 <html>
 
@@ -12,7 +17,7 @@
 
     <header id="menu_navigation">
         <div id="logo_site">
-            <img src="delete.png" width="50">
+            <a href="accueil.html"><img src="Images/logo.png" width="250"></a>
         </div>
         <nav id="navigation">
             <label for="hamburger_defiler" id="hamburger">
@@ -22,35 +27,16 @@
             </label>
             <input class="defiler" type="checkbox" id="hamburger_defiler" role="button" aria-pressed="true">
             <ul class="headings">
-                <li><a class="lien_header" href="Accueil.html">Accueil</a></li>
-                <li class="deroulant"><a class="lien_header">Ajouter</a>
-                    <ul class="liste_deroulante">
-                        <li><a class="lien_header" href="creationusager.php">Un usager</a></li>
-                        <li><a class="lien_header" href="creationmedecin.php">Un médecin</a></li>
-                        <li><a class="lien_header" href="creationconsultation.php">Une consultation</a></li>
-                    </ul>
-                </li>
-                <li class="deroulant"><a class="lien_header">Consulter</a>
-                    <ul class="liste_deroulante">
-                        <li><a class="lien_header" href="Competence1.html">Les usagers</a></li>
-                        <li><a class="lien_header" href="Competence2.html">Les médecins</a></li>
-                        <li><a class="lien_header" href="Competence3.html">Les consultations</a></li>
-                    </ul>
-                </li>
-                <li><a class="lien_header" href="Contact.html">Statistiques</a></li>
+                <li><a class="lien_header" href="affichageUsagers.php">Usagers</a></li>
+                <li><a class="lien_header" href="affichageMedecins.php">Médecins</a></li>
+                <li><a class="lien_header" href="affichageConsultations.php">Consultations</a></li>
+                <li><a class="lien_header" href="statistiques.php">Statistiques</a></li>
             </ul>
         </nav>
     </header>
 
     <?php
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["Confirmer"])) {
-
-        try {
-            $pdo = new PDO("mysql:host=localhost;dbname=cabinetmed", 'root', '');
-        } catch (Exception $e) {
-            echo ("Erreur : " . $e);
-        }
-
         $civ = $_POST['civ'];
         $nom = $_POST['nom'];
         $prenom = $_POST['prenom'];

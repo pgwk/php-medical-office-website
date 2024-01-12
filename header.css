@@ -15,6 +15,7 @@ body{
     display: flex;
     background-color: var(--bleu);
     width: 100%;
+    position: sticky;
 }
 
 #logo_site{

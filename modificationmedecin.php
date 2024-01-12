@@ -1,111 +1,137 @@
+<?php session_start();
+    require('fonctions.php');
+    verifierAuthentification();
+    $pdo = creerConnexion();
+?>
 <!DOCTYPE HTML>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title> Modification d'un médecin </title>
-    </head>
-    <?php
-        try {
-            $pdo = new PDO("mysql:host=localhost;dbname=cabinetmed", 'root', '');
-        } catch (Exception $e) {
-            echo ("Erreur : ".$e);
-        }
-            if (isset($_GET['idMedecin'])){
 
-                $sql = 'SELECT * FROM medecin WHERE idMedecin = '.$_GET['idMedecin'];
-                $stmt = $pdo->prepare($sql);
-                if ($stmt == false){
-                    echo 'ERREUR';
-                }
-                $stmt->execute();
-                $result = $stmt->fetchAll();
+<head>
+    <meta charset="utf-8">
+    <title> Modification d'un médecin </title>
+</head>
+<?php
+if (isset($_GET['idMedecin'])) {
 
-                $civilite = array_column($result, 'civilite')[0];
-                $nom = array_column($result, 'nom')[0];
-                $prenom = array_column($result, 'prenom')[0];
-            }
+    $sql = 'SELECT * FROM medecin WHERE idMedecin = ' . $_GET['idMedecin'];
+    $stmt = $pdo->prepare($sql);
+    if ($stmt == false) {
+        echo 'ERREUR';
+    }
+    $stmt->execute();
+    $result = $stmt->fetchAll();
 
-            if (isset($_POST['valider'])){
-                $sql = 'UPDATE medecin  SET nom = \''.$_POST['nom'].'\',
-                                            prenom = \''.$_POST['prenom'].'\',
-                                            civilite = \''.$_POST['civilite'].'\'
-                                        WHERE id = \''.$_GET['idMedecin'].'\';';
-                $bdd->query($sql);
-            }
-    ?>
-    <body>
-
-            <h1> Modification d'un usager </h1>
-
-            <form action="modificationmedecin.php" method="post">
-                Civilité    <input type="radio" id="civM" name="civ" value="M" <?php if ($civilite == 'M'){ echo 'checked';} ?> />
-                            <label for="civM">M</label>
-                            <input type="radio" id="civMme" name="civ" value="Mme" <?php if ($civilite == 'Mme'){ echo 'checked';} ?> />
-                            <label for="civMme">Mme</label><br><br>
-                Nom <input type="text" name="nom" maxlength=50 value='<?php echo $nom ?>'><br><br>
-                Prénom <input type="text" name="prenom" maxlength=50 value='<?php echo $prenom ?>'><br><br>
-                <input type="submit" name="Valider" value="Confirmer">
-                <input type="reset" name="Vider" value ="Vider">
-            </form>
-
-    </body>
-    <style>
-        body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    padding: 20px;
+    $civilite = array_column($result, 'civilite')[0];
+    $nom = array_column($result, 'nom')[0];
+    $prenom = array_column($result, 'prenom')[0];
 }
 
-form {
-    max-width: 400px;
-    margin: 0 auto;
-    background: white;
-    padding: 20px;
-    box-shadow: 2px 5px 10px rgba(0,0,0,0.1);
-    border-radius: 8px;
-    overflow: hidden;
+if (isset($_POST['valider'])) {
+    $sql = 'UPDATE medecin  SET nom = \'' . $_POST['nom'] . '\',
+                                            prenom = \'' . $_POST['prenom'] . '\',
+                                            civilite = \'' . $_POST['civilite'] . '\'
+                                        WHERE id = \'' . $_GET['idMedecin'] . '\';';
+    $bdd->query($sql);
 }
+?>
 
-input[type="text"],
-input[type="submit"],
-input[type="reset"] {
-    width: 95%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ddd;
-    box-sizing: border-box;
-    border-radius: 4px;
-}
+<body>
+    <header id="menu_navigation">
+        <div id="logo_site">
+            <a href="accueil.html"><img src="Images/logo.png" width="250"></a>
+        </div>
+        <nav id="navigation">
+            <label for="hamburger_defiler" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </label>
+            <input class="defiler" type="checkbox" id="hamburger_defiler" role="button" aria-pressed="true">
+            <ul class="headings">
+                <li><a class="lien_header" href="affichageUsagers.php">Usagers</a></li>
+                <li><a class="lien_header" href="affichageMedecins.php">Médecins</a></li>
+                <li><a class="lien_header" href="affichageConsultations.php">Consultations</a></li>
+                <li><a class="lien_header" href="statistiques.php">Statistiques</a></li>
+            </ul>
+        </nav>
+    </header>
+    <h1> Modification d'un usager </h1>
 
-input[type="submit"],
-input[type="reset"] {
-    width: auto;
-    background-color: #5cb85c;
-    color: white;
-    cursor: pointer;
-    border: none;
-    transition: background-color 0.3s;
-}
+    <form action="modificationmedecin.php" method="post">
+        Civilité <input type="radio" id="civM" name="civ" value="M" <?php if ($civilite == 'M') {
+            echo 'checked';
+        } ?> />
+        <label for="civM">M</label>
+        <input type="radio" id="civMme" name="civ" value="Mme" <?php if ($civilite == 'Mme') {
+            echo 'checked';
+        } ?> />
+        <label for="civMme">Mme</label><br><br>
+        Nom <input type="text" name="nom" maxlength=50 value='<?php echo $nom ?>'><br><br>
+        Prénom <input type="text" name="prenom" maxlength=50 value='<?php echo $prenom ?>'><br><br>
+        <input type="submit" name="Valider" value="Confirmer">
+        <input type="reset" name="Vider" value="Vider">
+    </form>
 
-input[type="reset"] {
-    background-color: #f0ad4e;
-}
+</body>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        padding: 20px;
+    }
 
-input[type="submit"]:hover,
-input[type="reset"]:hover {
-    opacity: 0.9;
-}
+    form {
+        max-width: 400px;
+        margin: 0 auto;
+        background: white;
+        padding: 20px;
+        box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        overflow: hidden;
+    }
 
-input[type="radio"] {
-    margin-right: 5px;
-}
+    input[type="text"],
+    input[type="submit"],
+    input[type="reset"] {
+        width: 95%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ddd;
+        box-sizing: border-box;
+        border-radius: 4px;
+    }
 
-label {
-    margin-right: 15px;
-}
+    input[type="submit"],
+    input[type="reset"] {
+        width: auto;
+        background-color: #5cb85c;
+        color: white;
+        cursor: pointer;
+        border: none;
+        transition: background-color 0.3s;
+    }
 
-label, input {
-    cursor: pointer;
-}
+    input[type="reset"] {
+        background-color: #f0ad4e;
+    }
+
+    input[type="submit"]:hover,
+    input[type="reset"]:hover {
+        opacity: 0.9;
+    }
+
+    input[type="radio"] {
+        margin-right: 5px;
+    }
+
+    label {
+        margin-right: 15px;
+    }
+
+    label,
+    input {
+        cursor: pointer;
+    }
 </style>
+
 </html>

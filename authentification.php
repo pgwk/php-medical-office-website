@@ -1,4 +1,8 @@
 <?php session_start();
+    if (isset($_SESSION['utilisateur']) && !empty($_SESSION['utilisateur'])){
+        header('Location: accueil.php'); 
+        exit();
+    }
     if (isset($_POST['connexion']) && isset($_POST['nom']) && isset($_POST['motDePasse'])) {
         $nomUtilisateur = $_POST['nom'];
         $motDePasse = $_POST['motDePasse'];
@@ -6,13 +10,13 @@
         $messageErreur = '';
         if ($nomUtilisateur == 'CABINET' && $motDePasse == 'CABINET') {
             $_SESSION['utilisateur'] = $nomUtilisateur;
-            header('Location: affichagemedecins.php');
+            header('Location: accueil.php');
             exit();
         } else {
             // Affichage de la popup d'erreur
             $messageErreur = '<div class="popup erreur" style="margin-top:0px">'.
-                    'Nom d\'utilisateur ou mot de passe incorrect.'.
-                '</div>';
+                                'Nom d\'utilisateur ou mot de passe incorrect.'.
+                             '</div>';
         }
     }
 ?>
@@ -28,7 +32,7 @@
     <div id='conteneur_connexion'>
             <div id='header_connexion'>
                 <h2>Connexion au cabinet</h2>
-</div>
+            </div>
             <div id='corps_connexion'>
                 <?php if (isset($messageErreur)){ echo $messageErreur; } ?>
                 <form method='post' action='authentification.php'>

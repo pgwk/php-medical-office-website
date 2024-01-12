@@ -1,3 +1,8 @@
+<?php session_start();
+    require('fonctions.php');
+    verifierAuthentification();
+    $pdo = creerConnexion();
+?>
 <!DOCTYPE HTML>
 <html>
 
@@ -11,7 +16,7 @@
 <body id="body_fond">
     <header id="menu_navigation">
         <div id="logo_site">
-            <img src="delete.png" width="50">
+            <a href="accueil.html"><img src="Images/logo.png" width="250"></a>
         </div>
         <nav id="navigation">
             <label for="hamburger_defiler" id="hamburger">
@@ -21,21 +26,9 @@
             </label>
             <input class="defiler" type="checkbox" id="hamburger_defiler" role="button" aria-pressed="true">
             <ul class="headings">
-                <li><a class="lien_header" href="Accueil.html">Accueil</a></li>
-                <li class="deroulant"><a class="lien_header">Ajouter</a>
-                    <ul class="liste_deroulante">
-                        <li><a class="lien_header" href="ajoutUsager.php">Un usager</a></li>
-                        <li><a class="lien_header" href="ajoutMedecin.php">Un médecin</a></li>
-                        <li><a class="lien_header" href="creationconsultation.php">Une consultation</a></li>
-                    </ul>
-                </li>
-                <li class="deroulant"><a class="lien_header">Consulter</a>
-                    <ul class="liste_deroulante">
-                        <li><a class="lien_header" href="affichageUsagers.php">Les usagers</a></li>
-                        <li><a class="lien_header" href="affichageMedecins.php">Les médecins</a></li>
-                        <li><a class="lien_header" href="affichageConsultations.php">Les consultations</a></li>
-                    </ul>
-                </li>
+                <li><a class="lien_header" href="affichageUsagers.php">Usagers</a></li>
+                <li><a class="lien_header" href="affichageMedecins.php">Médecins</a></li>
+                <li><a class="lien_header" href="affichageConsultations.php">Consultations</a></li>
                 <li><a class="lien_header" href="statistiques.php">Statistiques</a></li>
             </ul>
         </nav>
@@ -63,14 +56,7 @@
         }
         return false;
     }
-
-    // Connexion (Réutilisée plus tard)
-    try {
-        $pdo = new PDO("mysql:host=localhost;dbname=cabinetmed", 'root', '');
-    } catch (Exception $e) {
-        echo ("Erreur : " . $e);
-    }
-
+    
     if (isset($_GET["id"])){
 
         $cleConsultation = explode('$', $_GET["id"]);
@@ -87,18 +73,16 @@
                                     AND c.idMedecin = ?
                                     AND c.dateConsultation = ?
                                     AND c.heureDebut <> ?");
-            if (!$stmt) { echo "Erreur lors d'un prepare statement : " . $stmt->errorInfo(); exit(); }
-    
-            if ($stmt->execute($cleConsultation)){
-                $consulationsChevauchantes = false;
-                while (!$consulationsChevauchantes && $consultation = $stmt->fetch()){
-                    if (consultationsChevauchantes($heure, $duree, substr($consultation['heureDebut'], 0, 5), substr($consultation['duree'], 0, 5))) {
-                        $consulationsChevauchantes = true;
-                    }
+            verifierPrepare($stmt);
+            verifierExecute($stmt->execute($cleConsultation));
+
+            $consulationsChevauchantes = false;
+            while (!$consulationsChevauchantes && $consultation = $stmt->fetch()){
+                if (consultationsChevauchantes($heure, $duree, substr($consultation['heureDebut'], 0, 5), substr($consultation['duree'], 0, 5))) {
+                    $consulationsChevauchantes = true;
                 }
-            } else {
-                echo "Erreur lors d'un execute statement : " . $stmt->errorInfo(); exit(); 
             }
+            
 
             if (!$consulationsChevauchantes) {
                 $stmt = $pdo->prepare(" UPDATE Consultation
@@ -106,18 +90,15 @@
                                         WHERE idMedecin = ?
                                         AND dateConsultation = ?
                                         AND heureDebut = ?");
-                if (!$stmt) { echo "Erreur lors d'un prepare statement : " . $stmt->errorInfo(); exit(); }
+                verifierPrepare($stmt);
+                verifierExecute($stmt->execute([$idUsager, $heure, $duree, $cleConsultation[0], $cleConsultation[1], $cleConsultation[2]]));
 
-                if ($stmt->execute([$idUsager, $heure, $duree, $cleConsultation[0], $cleConsultation[1], $cleConsultation[2]])) {
-                    $elementsDate = explode('-', $date);
-                    $dateFormatee = $elementsDate[2] . '/' . $elementsDate[1] . '/' . $elementsDate[0];
-                    $usager = $pdo->query("SELECT CONCAT(civilite, '. ', nom, ' ', prenom) FROM Usager WHERE idUsager = " . $idUsager)->fetchColumn();
-                    $message = 'La consultation a été modifiée ! Elle a lieu le <strong>' . $dateFormatee . '</strong> à <strong>' . str_replace(':', 'H', $heure) . '</strong> pour le patient <strong>' . $usager . '</strong>';
-                    $classeMessage = 'succes';
-                    $cleConsultation[2] = $heure;
-                } else {
-                    echo "Erreur lors d'un execute statement : " . $stmt->errorInfo(); exit(); 
-                }
+                $elementsDate = explode('-', $date);
+                $dateFormatee = $elementsDate[2] . '/' . $elementsDate[1] . '/' . $elementsDate[0];
+                $usager = $pdo->query("SELECT CONCAT(civilite, '. ', nom, ' ', prenom) FROM Usager WHERE idUsager = " . $idUsager)->fetchColumn();
+                $message = 'La consultation a été modifiée ! Elle a lieu le <strong>' . $dateFormatee . '</strong> à <strong>' . str_replace(':', 'H', $heure) . '</strong> pour le patient <strong>' . $usager . '</strong>';
+                $classeMessage = 'succes';
+                $cleConsultation[2] = $heure;
             } else {
                 $message = 'La consultation chevauche avec un autre créneau pour ce médecin';
                 $classeMessage = 'erreur';
@@ -141,19 +122,16 @@
                                 AND c.idMedecin = ?
                                 AND c.dateConsultation = ?
                                 AND c.heureDebut = ?");
-        if (!$stmt) { echo "Erreur lors d'un prepare statement : " . $stmt->errorInfo(); exit(); }
-        
-        if ($stmt->execute($cleConsultation)){
-            $resultat = $stmt->fetch();
-            $medecin = $resultat["civM"] . '. ' . $resultat["nomM"] . ' ' . $resultat["prenomM"];
-            $usagerActuel = $resultat["civU"] . '. ' . $resultat["nomU"] . ' ' . $resultat["prenomU"] . ' (' . $resultat["numeroSecuriteSociale"] . ')';
-            $idUsagerActuel = $resultat["idUsager"];
-            $date = $resultat["dateConsultation"];
-            $heure = $resultat["heureDebut"];
-            $duree = $resultat["duree"];
-        } else { 
-            echo "Erreur lors d'un execute statement : " . $stmt->errorInfo(); exit(); 
-        }
+        verifierPrepare($stmt);
+        verifierExecute($stmt->execute($cleConsultation));
+            
+        $resultat = $stmt->fetch();
+        $medecin = $resultat["civM"] . '. ' . $resultat["nomM"] . ' ' . $resultat["prenomM"];
+        $usagerActuel = $resultat["civU"] . '. ' . $resultat["nomU"] . ' ' . $resultat["prenomU"] . ' (' . $resultat["numeroSecuriteSociale"] . ')';
+        $idUsagerActuel = $resultat["idUsager"];
+        $date = $resultat["dateConsultation"];
+        $heure = $resultat["heureDebut"];
+        $duree = $resultat["duree"];
         $id = $cleConsultation[0].'$'.$cleConsultation[1].'$'.$cleConsultation[2];
     }
 
@@ -168,27 +146,25 @@
         <?php
         $today = gmdate('Y-m-d', time());
 
-            // Création de la liste des usagers
-            $stmt = $pdo->prepare(" SELECT idUsager, numeroSecuriteSociale, civilite, nom, prenom 
+        // Création de la liste des usagers
+        $stmt = $pdo->prepare(" SELECT idUsager, numeroSecuriteSociale, civilite, nom, prenom 
                                     FROM usager
                                     WHERE idUsager <> ?
                                     ORDER BY nom, prenom ASC");
-            if (!$stmt) { echo "Erreur lors d'un prepare statement : " . $stmt->errorInfo(); }
+        verifierPrepare($stmt);
+        verifierExecute($stmt->execute([$idUsagerActuel]));
 
-            if ($stmt->execute([$idUsagerActuel])) {
-                echo 'Patient <select name="idUsager" id="idUsager">';
-                echo '<option value=' . $idUsagerActuel .'> '. $usagerActuel . '</option>'; 
-                $stmt->execute();
-                while ($resultat = $stmt->fetch()) {
-                    $id = $resultat["idUsager"];
-                    $titre = $resultat["civilite"]. '. ' . $resultat["nom"] . ' ' . $resultat["prenom"] . ' (' . $resultat["numeroSecuriteSociale"] . ')';
-                    echo '<option value=' . $id . '> ' . htmlspecialchars($titre) . '</option>';
-                }
-                echo '</select><br><br>';
-            } else { 
-                echo "Erreur lors d'un execute statement : " . $stmt->errorInfo(); exit(); 
-            }
-        
+        echo 'Patient <select name="idUsager" id="idUsager">';
+        echo '<option value=' . $idUsagerActuel . '> ' . $usagerActuel . '</option>';
+        $stmt->execute();
+        while ($resultat = $stmt->fetch()) {
+            $id = $resultat["idUsager"];
+            $titre = $resultat["civilite"] . '. ' . $resultat["nom"] . ' ' . $resultat["prenom"] . ' (' . $resultat["numeroSecuriteSociale"] . ')';
+            echo '<option value=' . $id . '> ' . htmlspecialchars($titre) . '</option>';
+        }
+        echo '</select><br><br>';
+
+
         ?>
         <div class="ligne_formulaire temps_consultation">
             <div class="colonne_formulaire moitie">
