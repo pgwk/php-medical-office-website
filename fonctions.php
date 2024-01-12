@@ -8,7 +8,7 @@
     function creerConnexion(){
         $pdo = null;
         try {
-            $pdo = new PDO('mysql:host=localhost;dbname=cabinetmed;charset=utf8', 'root', '');
+            $pdo = new PDO('mysql:host=localhost;dbname=id21781824_cabinet;charset=utf8', 'id21781824_rsp4626a', 'Pizza4Frangipane_');
         } catch (Exception $e) {
             echo ("Erreur ".$e);
             exit();
