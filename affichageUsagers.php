@@ -47,7 +47,7 @@
             </div>
                 <?php
                     try {
-                        $pdo = new PDO('mysql:host=localhost;dbname=cabinetmed;charset=utf8', 'root', '');
+                        $pdo = creerConnexion();
                     } catch (Exception $e) {
                         echo ("Erreur " . $e);
                     }
