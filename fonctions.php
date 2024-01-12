@@ -43,12 +43,12 @@
         echo '</select>';
     } 
 
-    function creerComboboxMedecins($pdo, $idMedecin) {
+    function creerComboboxMedecins($pdo, $idMedecin, $message) {
         $stmt = $pdo->prepare("SELECT idMedecin, civilite, nom, prenom FROM medecin");
         verifierPrepare($stmt);
         verifierExecute($stmt->execute());
         echo '<select name="idMedecin">
-        <option value="">Tous les médecins</option>';
+        <option value="">'.$message.'</option>';
         while ($dataMedecin = $stmt->fetch()) {
             $id = $dataMedecin["idMedecin"];
             $titre = $dataMedecin["civilite"] . '. ' . $dataMedecin["nom"] . ' ' . $dataMedecin["prenom"];

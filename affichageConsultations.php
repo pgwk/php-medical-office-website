@@ -3,8 +3,8 @@
     verifierAuthentification();
     $pdo = creerConnexion();
 
-    $idMedecin = -1;
-    $idUsager = -1;
+    $idMedecin = '';
+    $idUsager = '';
     if (isset($_POST["valider"])) {
         $idMedecin = $_POST["idMedecin"];
         $idUsager = $_POST["idUsager"];
@@ -46,7 +46,7 @@
 
         <form class="formulaire_table" method="post" action="affichageConsultations.php">
             <div class="colonne_formulaire large">
-                Médecin <?php creerComboboxMedecins($pdo, $idMedecin); ?>
+                Médecin <?php creerComboboxMedecins($pdo, $idMedecin, 'Tous les médecins'); ?>
             </div>
             <div class="colonne_formulaire large">
                 Patient 

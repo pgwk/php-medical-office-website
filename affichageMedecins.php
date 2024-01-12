@@ -36,7 +36,7 @@
     <main class="main_affichage">
         <h1> Liste des médecins </h1>
         <div class="conteneur_table_recherche">
-            <form method="post" action="Medecins.php" class="formulaire_table">
+            <form method="post" action="affichageMedecins.php" class="formulaire_table">
                 <div class="colonne_formulaire large">
                     Nom <input type="text" name="nom" value="">
                 </div>

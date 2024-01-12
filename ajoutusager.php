@@ -145,13 +145,6 @@
         Médecin reférent <select name="idMed" id="selecteur_medecin_referent">
             <option value="">-- Choisissez un médecin reférent --</option>
             <?php
-            if (!isset($pdo)) {
-                try {
-                    $pdo = new PDO("mysql:host=localhost;dbname=cabinetmed", 'root', '');
-                } catch (Exception $e) {
-                    echo ("Erreur : " . $e);
-                }
-            }
             $stmt = $pdo->prepare("SELECT idMedecin, civilite, nom, prenom FROM medecin");
             if ($stmt == false) {
                 echo "PREPARE ERROR";
