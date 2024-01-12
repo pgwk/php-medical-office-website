@@ -1,5 +1,6 @@
 body {
     font-family: 'Helvetica Neue', Helvetica, Arial;
+    text-align: center;
 }
 
 .bouton {
@@ -10,7 +11,7 @@ body {
     color: white;
     font-size: 16px;
     padding: 15px 32px;
-    align-self: center;
+    margin: auto;
 
 }
 
@@ -19,8 +20,16 @@ body {
     display: grid;
     align-items: center;
     background-color: #e8ebe9;
-    padding: 50px;
+    padding: 30px;
     width: 300px;
+    height : 500px;
+    margin: auto;
 
+}
+
+h1 {
+    padding : 20px;
+    align-self: center;
+    margin: auto;
 }
 
