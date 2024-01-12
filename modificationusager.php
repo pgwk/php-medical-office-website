@@ -15,12 +15,10 @@
     }
     
     if (isset($_GET['idUsager'])) {
-        $sql = 'SELECT * FROM usager WHERE idUsager = ' . $_GET['idUsager'];
+        $sql = 'SELECT * FROM usager WHERE idUsager = ?';
         $stmt = $pdo->prepare($sql);
-        if ($stmt == false) {
-            echo 'ERREUR';
-        }
-        $stmt->execute();
+        verifierPrepare($stmt);
+        verifierExecute($stmt->execute([$_GET['idUsager']]));
         $result = $stmt->fetchAll();
     
         $idMedecinRef = array_column($result, 'medecinReferent')[0];

@@ -38,19 +38,14 @@
         <h1> Liste des usagers </h1>
         <div class="conteneur_table_recherche">
             <form method="post" action="affichageUsagers.php" class="formulaire_table">
-                <input type="text" name="criteres" placeholder="Entrez des mots-clés séparés par un espace" value="<?php if (isset($_POST['criteres'])) echo $_POST['criteres'] ?>">
+                <input type="text" name="criteres" class="espaces_permis" placeholder="Entrez des mots-clés séparés par un espace" value="<?php if (isset($_POST['criteres'])) echo $_POST['criteres'] ?>">
                 <input type="submit" value="Rechercher">
-                <a href="ajoutUsager.php" class="lien_ajouter">
+                <a href="ajoutusager.php" class="lien_ajouter">
                     <div class="bouton_ajouter"><img src="Images/ajouter.png" width="20px"/>Ajouter</div>
                 </a>
             </form>
             </div>
                 <?php
-                    try {
-                        $pdo = new PDO('mysql:host=localhost;dbname=cabinetmed;charset=utf8', 'root', '');
-                    } catch (Exception $e) {
-                        echo ("Erreur " . $e);
-                    }
 
                     // Début de la requête, on sélectionne tous les usagers et leur potentiel médecin référent
                     $reqUsagers = ' SELECT u.*, m.nom as nomMedecin, m.prenom as prenomMedecin
@@ -145,5 +140,7 @@
     </main>
     <!-- Script pour trier une table en cliquant sur une colonne -->
     <script src="tri-tableau.js"></script>
+    <!-- Script pour formater les inputs -->
+    <script src="format-texte-input.js"></script>
 </body>
 </html>
