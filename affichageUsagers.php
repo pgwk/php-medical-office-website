@@ -46,7 +46,6 @@
             </form>
             </div>
                 <?php
-
                     // Début de la requête, on sélectionne tous les usagers et leur potentiel médecin référent
                     $reqUsagers = ' SELECT u.*, m.nom as nomMedecin, m.prenom as prenomMedecin
                                 FROM usager u
