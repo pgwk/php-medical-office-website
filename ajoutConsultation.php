@@ -111,7 +111,7 @@
         <h1> Planification d'une consultation </h1>
     </div>
 
-    <form class="formulaire" action="creationconsultation.php" method="post">
+    <form class="formulaire" action="ajoutConsultation.php" method="post">
 
         <?php
         $today = gmdate('Y-m-d', time());
