@@ -1,6 +1,6 @@
 <?php session_start();
     if (isset($_SESSION['utilisateur']) && !empty($_SESSION['utilisateur'])){
-        header('Location: accueil.php'); 
+        header('Location: index.php'); 
         exit();
     }
     if (isset($_POST['connexion']) && isset($_POST['nom']) && isset($_POST['motDePasse'])) {
@@ -10,7 +10,7 @@
         $messageErreur = '';
         if ($nomUtilisateur == 'CABINET' && $motDePasse == 'CABINET') {
             $_SESSION['utilisateur'] = $nomUtilisateur;
-            header('Location: accueil.php');
+            header('Location: index.php');
             exit();
         } else {
             // Affichage de la popup d'erreur
