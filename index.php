@@ -8,11 +8,13 @@
 
 <head>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="accueil2.css">
+    <linl rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="header.css">
     <title> Accueil </title>
 </head>
 <body>
-
+    <?php include 'header.html' ?>
+    
     <h1> Bienvenue ! </h1>
      
     <div class=divBtns>

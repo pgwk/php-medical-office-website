@@ -1,6 +1,7 @@
 function premiereLettreMajuscule(input) {
     input.addEventListener('input', function () {
         this.value = this.value.charAt(0).toUpperCase() + this.value.slice(1).toLowerCase();
+        this.value = this.value.replace(/[0-9]/g, '');
     });
 }
 

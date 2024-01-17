@@ -43,7 +43,7 @@ body {
     border-top-right-radius: 8px;
     border-top-left-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
+    margin-top: 30px;
     border-bottom: 1px solid #ebebeb;
 }
 
@@ -291,9 +291,13 @@ input[type="radio"] {
     border-radius: 4px;
 }
 
+.conteneur_table_affichage{
+    overflow-x: scroll;
+}
+
 #table_affichage {
     border-collapse: collapse;
-    width: 100%;
+    min-width: 100%;
 }
 
 #table_affichage th {
