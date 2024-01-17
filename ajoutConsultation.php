@@ -100,5 +100,7 @@
             <input type="submit" name="Confirmer" value="Confirmer">
         </div>
     </form>
+    <!-- Script pour sélectionner automatiquement le médecin référent -->
+    <script src="selection-medecin-ref.js"></script>
 </body>
 </html>
