@@ -28,9 +28,9 @@
                 <table id="table_affichage">
                 <thead>
                     <tr>
-                        <th onclick="sortTable(0)">Civilite </th>
-                        <th onclick="sortTable(1)">Nom </th>
-                        <th onclick="sortTable(2)">Prenom </th>
+                        <th>Civilite </th>
+                        <th>Nom </th>
+                        <th>Prenom </th>
                     </tr>
                 </thead><tbody>';
         while ($dataMedecin = $stmt->fetch()){
@@ -77,8 +77,6 @@
             <?php echo $nombreLignes; if (!empty($table)) { echo $table; } ?>
         </div>
     </main>
-    <!-- Script pour trier une table en cliquant sur une colonne -->
-    <script src="tri-tableau.js"></script>
 </body>
 
 </html>

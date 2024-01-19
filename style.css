@@ -308,7 +308,6 @@ input[type="radio"] {
 #table_affichage th {
     background-color: #007bff;
     color: white;
-    cursor: pointer;
     user-select: none;
 }
 
@@ -345,7 +344,7 @@ input[type="radio"] {
 /* ======================================= */
 
 #body_accueil {
-    background: rgba(0, 0, 0, .4) url(Images/fondAccueil2.png);
+    background: rgba(0, 0, 0, .4) url(Images/fondAccueil.png);
     background-size: cover;
     margin: 0px;
     background-blend-mode: darken;
@@ -423,3 +422,36 @@ input[type="radio"] {
     flex-direction: column;
     width:100%;
 }
+
+/* ======================================= */
+/* ============= Statistiques ============ */
+/* ======================================= */
+
+.tableFiltres {
+    border-collapse: collapse;
+    margin-top: 1em; 
+  }
+  
+  .tableFiltres th,
+  .tableFiltres td {
+    border: 1px solid #ddd;
+    padding: 8px 16px; 
+    text-align: center; 
+  }
+  
+  .tableFiltres tr:first-child th,
+  .tableFiltres tr th:first-child,
+  .tableFiltres tr td:first-child {
+    background-color: #f4f4f4;
+    font-weight: bold; 
+    text-align: left;
+  }
+  
+  .tableFiltres tr td:first-child {
+    background-color: #e9ecef; 
+    color: #333;
+  }
+  
+  .tableFiltres td:hover {
+    background-color: #f5f5f5;
+  }

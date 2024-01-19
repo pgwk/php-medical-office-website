@@ -63,16 +63,16 @@
                     <table id="table_affichage">
                     <thead>
                         <tr>
-                            <th onclick="sortTable(0)">Civilite </th>
-                            <th onclick="sortTable(1)">Nom </th>
-                            <th onclick="sortTable(2)">Prenom </th>
-                            <th onclick="sortTable(3)">Adresse </th>
-                            <th onclick="sortTable(4)">Ville </th>
-                            <th onclick="sortTable(5)">Code postal </th>
-                            <th onclick="sortTable(6)">Numéro sécurité sociale </th>
-                            <th onclick="sortTable(7)">Date de naissance </th>
-                            <th onclick="sortTable(8)">Ville de naissance </th>
-                            <th onclick="sortTable(9)">Médecin référent </th>
+                            <th>Civilite </th>
+                            <th>Nom </th>
+                            <th>Prenom </th>
+                            <th>Adresse </th>
+                            <th>Ville </th>
+                            <th>Code postal </th>
+                            <th>Numéro sécurité sociale </th>
+                            <th>Date de naissance </th>
+                            <th>Ville de naissance </th>
+                            <th>Médecin référent </th>
                         </tr>
                     </thead><tbody>';
             while ($dataUsager = $stmt->fetch()){
@@ -122,8 +122,6 @@
             <?php echo $nombreLignes; if (!empty($table)) { echo $table; } ?>
         </div>
     </main>
-    <!-- Script pour trier une table en cliquant sur une colonne -->
-    <script src="tri-tableau.js"></script>
     <!-- Script pour formater les inputs -->
     <script src="format-texte-input.js"></script>
 </body>
