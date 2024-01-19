@@ -418,7 +418,7 @@ input[type="radio"] {
     background-color:rgb(223, 39, 39);
 }
 
-#medecin_consultation {
+.input_lecture {
     display: flex;
     flex-direction: column;
     width:100%;
