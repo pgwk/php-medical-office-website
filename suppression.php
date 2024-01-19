@@ -10,6 +10,8 @@
 
             <?php
 
+                require('fonctions.php');
+
                 if ($_SERVER["REQUEST_METHOD"] == "GET") {
                     if ($_GET['type']=='usager') {
                         echo '<p> Êtes vous sûr(e) de vouloir supprimer cet usager? </p>';
@@ -29,28 +31,35 @@
                 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     try {
-                        $pdo = new PDO("mysql:host=localhost;dbname=cabinetmed", 'root', '');
+                        $pdo = creerConnexion();
                     } catch (Exception $e) {
                         echo ("Erreur : ".$e);
                     }
                     
                     $arguments = array();
                     if ($_REQUEST['type'] == 'usager') {
+                        $stmt = $pdo->prepare("DELETE FROM consultation WHERE idUsager = ".$_REQUEST['id']);
+                        $stmt->execute();
                         $stmt = $pdo->prepare("DELETE FROM usager WHERE idUsager=".$_REQUEST['id']);
                     } else if ($_REQUEST['type'] == 'medecin') {
                         $stmt = $pdo->prepare("UPDATE usager SET medecinReferent = NULL WHERE medecinReferent=".$_REQUEST['id']);
+                        $stmt->execute();
+                        $stmt = $pdo->prepare("DELETE FROM consultation WHERE idMedecin = ".$_REQUEST['id']);
                         $stmt->execute();
                         $stmt = $pdo->prepare("DELETE FROM medecin WHERE idMedecin=".$_REQUEST['id']);
                     } else {
                         $stmt = $pdo->prepare("DELETE FROM consultation WHERE idMedecin = ? AND dateConsultation = ? AND heureDebut = ?");
                         $arguments = explode('$', $_POST["id"]);
                     }
-                    if (!$stmt) { echo "Erreur lors d'un prepare statement : " . $stmt->errorInfo(); exit(1); }
+                    if (!$stmt) { 
+                        echo "Erreur lors d'un prepare statement : " . $stmt->errorInfo(); //exit(1); 
+                    }
                     
                     if ($stmt->execute($arguments)) {
                         echo 'Suppression effectuée!';
+                        header("Location : index.php");
                     } else {
-                        echo "Erreur lors d'un execute statement : " . $stmt->errorInfo(); exit(1);
+                        echo "Erreur lors d'un execute statement : " . $stmt->errorInfo(); //exit(1);
                     }
                     
                 }
