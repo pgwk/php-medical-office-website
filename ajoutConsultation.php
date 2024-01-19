@@ -64,7 +64,7 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="header.css">
     <link rel="stylesheet" href="style.css">
-    <title> Planification de consultation </title>
+    <title> Planification d'une consultation </title>
 </head>
 
 <body id="body_fond">

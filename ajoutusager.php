@@ -1,8 +1,10 @@
 <?php session_start();
     require('fonctions.php');
+    require('fonctionsVerifierInputs.php');
     verifierAuthentification();
     $pdo = creerConnexion();
 
+    $today = gmdate('Y-m-d', time());
     if (isset($_POST["Confirmer"]) && !empty($_POST["Confirmer"])) {
         $civ = $_POST['civ'];
         $nom = $_POST['nom'];
@@ -116,17 +118,17 @@
                 Ville <input type="text" name="ville" value="" maxlength=50 required>
             </div>
             <div class="colonne_formulaire petit">
-                Code postal <input type="text" name="cp" value="" minlength=5 maxlength=5 oninput="chiffresUniquement(event)" required>
+                Code postal <input type="text" name="cp" value="" minlength=5 maxlength=5 class="chiffres_uniquement" required>
             </div>
         </div>
         <div class="ligne_formulaire">
             <div class="colonne_formulaire moitie">
-                N° Sécurité sociale <input type="text" name="nss" value="" minlength=15 maxlength=15 oninput="chiffresUniquement(event)" required>
+                N° Sécurité sociale <input type="text" name="nss" value="" minlength=15 maxlength=15 class="chiffres_uniquement" required>
             </div>
         </div>
         <div class="ligne_formulaire">
             <div class="colonne_formulaire moitie">
-                Date de naissance <input type="date" name="date" value="" required>
+                Date de naissance <input type="date" name="date" value="" min="01/01/1900" max="<?php echo $today ?>" required>
             </div>
             <div class="colonne_formulaire moitie">
                 Lieu de naissance <input type="text" name="lieu" value="" maxlength=50 required>

@@ -26,7 +26,7 @@
 
     function tailleInputRespectee($input, $taille){
         if (strlen($input) == $taille) {
-            return false;
+            return true;
         }
         return false;
     }

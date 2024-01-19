@@ -51,8 +51,7 @@
                     verifierPrepare($stmt);
                     verifierExecute($stmt->execute([$idUsager, $heure, $duree, $cleConsultation[0], $cleConsultation[1], $cleConsultation[2]]));
 
-                    $elementsDate = explode('-', $date);
-                    $dateFormatee = $elementsDate[2] . '/' . $elementsDate[1] . '/' . $elementsDate[0];
+                    $dateFormatee = formaterDate($date);
                     $usager = $pdo->query("SELECT CONCAT(civilite, '. ', nom, ' ', prenom) FROM Usager WHERE idUsager = " . $idUsager)->fetchColumn();
                     $message = 'La consultation a été modifiée ! Elle a lieu le <strong>' . $dateFormatee . '</strong> à <strong>' . str_replace(':', 'H', $heure) . '</strong> pour le patient <strong>' . $usager . '</strong>';
                     $classeMessage = 'succes';
@@ -103,7 +102,7 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="header.css">
     <link rel="stylesheet" href="style.css">
-    <title> Planification de consultation </title>
+    <title> Modification d'une consultation </title>
 </head>
 
 <body id="body_fond">
@@ -116,9 +115,12 @@
     </div>
 
     <form class="formulaire" action="modificationConsultation.php?id=<?php echo $id ?>" method="post">
+        <div class="ligne_formulaire">
+            <div id="medecin_consultation">
+                Médecin <input type="text" name="idMed" value="<?php echo $medecin ?>" id="medecin_consultation" readonly>
+            </div>
+        </div>
         <?php
-        echo 'Médecin ';
-        creerComboboxMedecins($pdo, null, null);
         echo 'Usager ';
         creerComboboxUsagers($pdo, null, null); 
         ?>
