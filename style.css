@@ -352,23 +352,23 @@ input[type="radio"] {
 }
 
 #titre_accueil{
-    max-width: 100px;
+    max-width: 200px;
     color: white;
     margin: 20px auto;
     margin-top: 80px;
+    font-size: 40px;
 }
 
 .divBtns {
     display: flex;
     flex-direction: column;
-    max-width: 600px;
+    max-width: 650px;
     margin: 20px auto;
 }
 
 .btn-group {
     display: flex; 
     flex: 1;
-    justify-content: space-between; 
     gap: 10px; 
 }
 
