@@ -42,6 +42,7 @@
         verifierPrepare($stmt);
         verifierExecute($stmt->execute($arguments));
         $message = 'Suppression effectuée !';
+        header('Refresh: 1;URL=index.php');
     }
 
 ?>
